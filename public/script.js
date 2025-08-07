@@ -284,6 +284,11 @@ class EscapeRoomGame {
         let currentScale = 1;
         let initialDistance = 0;
         let initialScale = 1;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let translateX = 0;
+        let translateY = 0;
 
         // 터치 이벤트 (핀치 줌)
         problemImage.addEventListener('touchstart', (e) => {
@@ -291,6 +296,10 @@ class EscapeRoomGame {
                 e.preventDefault();
                 initialDistance = this.getDistance(e.touches[0], e.touches[1]);
                 initialScale = currentScale;
+            } else if (e.touches.length === 1) {
+                isDragging = true;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
             }
         }, { passive: false });
 
@@ -299,38 +308,73 @@ class EscapeRoomGame {
                 e.preventDefault();
                 const currentDistance = this.getDistance(e.touches[0], e.touches[1]);
                 const scale = (currentDistance / initialDistance) * initialScale;
-                currentScale = Math.min(Math.max(scale, 0.5), 3); // 0.5배 ~ 3배 제한
-                this.applyZoom(problemImage, currentScale);
+                currentScale = Math.min(Math.max(scale, 0.5), 5); // 0.5배 ~ 5배 제한
+                this.applyZoom(problemImage, currentScale, translateX, translateY);
+            } else if (e.touches.length === 1 && isDragging) {
+                e.preventDefault();
+                translateX = e.touches[0].clientX - startX;
+                translateY = e.touches[0].clientY - startY;
+                this.applyZoom(problemImage, currentScale, translateX, translateY);
             }
         }, { passive: false });
 
-        // 더블 탭으로 리셋
-        let lastTap = 0;
         problemImage.addEventListener('touchend', (e) => {
+            isDragging = false;
+            
+            // 더블 탭으로 리셋
             const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTap;
+            const tapLength = currentTime - (problemImage.lastTap || 0);
             if (tapLength < 500 && tapLength > 0) {
                 // 더블 탭
                 currentScale = 1;
-                this.applyZoom(problemImage, currentScale);
+                translateX = 0;
+                translateY = 0;
+                this.applyZoom(problemImage, currentScale, translateX, translateY);
                 e.preventDefault();
             }
-            lastTap = currentTime;
+            problemImage.lastTap = currentTime;
         });
 
         // 마우스 휠 줌 (데스크톱)
         problemImage.addEventListener('wheel', (e) => {
             e.preventDefault();
             const delta = e.deltaY > 0 ? 0.9 : 1.1;
-            currentScale = Math.min(Math.max(currentScale * delta, 0.5), 3);
-            this.applyZoom(problemImage, currentScale);
+            currentScale = Math.min(Math.max(currentScale * delta, 0.5), 5);
+            this.applyZoom(problemImage, currentScale, translateX, translateY);
         }, { passive: false });
 
         // 더블 클릭으로 리셋 (데스크톱)
         problemImage.addEventListener('dblclick', (e) => {
             e.preventDefault();
             currentScale = 1;
-            this.applyZoom(problemImage, currentScale);
+            translateX = 0;
+            translateY = 0;
+            this.applyZoom(problemImage, currentScale, translateX, translateY);
+        });
+
+        // 마우스 드래그 (데스크톱)
+        problemImage.addEventListener('mousedown', (e) => {
+            if (currentScale > 1) {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                problemImage.style.cursor = 'grabbing';
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging && currentScale > 1) {
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                this.applyZoom(problemImage, currentScale, translateX, translateY);
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            if (problemImage) {
+                problemImage.style.cursor = 'zoom-in';
+            }
         });
     }
 
@@ -340,10 +384,17 @@ class EscapeRoomGame {
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    applyZoom(image, scale) {
-        image.style.transform = `scale(${scale})`;
+    applyZoom(image, scale, translateX = 0, translateY = 0) {
+        image.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
         image.style.transformOrigin = 'center center';
-        image.style.transition = 'transform 0.1s ease-out';
+        image.style.transition = scale === 1 ? 'transform 0.3s ease-out' : 'transform 0.1s ease-out';
+        
+        // 줌 레벨에 따라 커서 변경
+        if (scale > 1) {
+            image.style.cursor = 'grab';
+        } else {
+            image.style.cursor = 'zoom-in';
+        }
     }
 
     showSuccessModal() {

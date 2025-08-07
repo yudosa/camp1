@@ -215,7 +215,7 @@ body {
         0 2px 4px rgba(255,255,255,0.2);
 }
 
-/* 자물쇠 영역 - 기본적이고 깔끔하게 */
+/* 자물쇠 영역 - 매우 기본적이고 깔끔하게 */
 .lock-area {
     position: absolute;
     top: 50%;
@@ -223,11 +223,11 @@ body {
     transform: translate(-50%, -50%);
     width: clamp(220px, 65vw, 320px);
     height: clamp(280px, 45vh, 380px);
-    background: #2c3e50;
-    border-radius: 15px;
+    background: #f5f5f5;
+    border-radius: 10px;
     padding: clamp(15px, 4vw, 25px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    border: 1px solid #34495e;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border: 2px solid #ddd;
 }
 
 .simple-lock {
@@ -240,29 +240,27 @@ body {
 }
 
 .lock-display {
-    background: #1a1a1a;
-    border-radius: 10px;
+    background: #fff;
+    border-radius: 8px;
     padding: clamp(12px, 3vw, 20px);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.6);
-    border: 1px solid #333;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
 }
 
 .lock-screen {
-    background: #0a0a0a;
-    border-radius: 8px;
+    background: #f8f8f8;
+    border-radius: 6px;
     padding: clamp(10px, 2.5vw, 16px);
     text-align: center;
-    border: 1px solid #444;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.8);
+    border: 1px solid #ddd;
 }
 
 .lock-display span {
-    font-family: 'Courier New', 'Monaco', monospace;
+    font-family: 'Arial', sans-serif;
     font-size: clamp(1.4rem, 4.5vw, 2.2rem);
     font-weight: bold;
-    color: #00ff00;
-    text-shadow: 0 0 5px #00ff00;
-    letter-spacing: 2px;
+    color: #333;
+    letter-spacing: 1px;
     display: block;
     position: relative;
 }
@@ -270,7 +268,7 @@ body {
 .lock-display span::after {
     content: '|';
     animation: blink 1s infinite;
-    color: #00ff00;
+    color: #333;
     margin-left: 2px;
 }
 
@@ -282,63 +280,69 @@ body {
 .lock-buttons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: clamp(8px, 2vw, 12px);
+    gap: clamp(6px, 1.5vw, 10px);
     flex: 1;
 }
 
 .button-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: clamp(8px, 2vw, 12px);
+    gap: clamp(6px, 1.5vw, 10px);
 }
 
 .lock-btn {
-    background: #4a4a4a;
-    border: 1px solid #555;
-    border-radius: 8px;
-    color: white;
-    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
-    font-weight: bold;
+    background: #e8e8e8;
+    border: none;
+    border-radius: 6px;
+    color: #333;
+    font-size: clamp(1.2rem, 3.8vw, 1.8rem);
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    min-height: clamp(45px, 12vw, 65px);
+    transition: background-color 0.15s ease;
+    min-height: clamp(50px, 13vw, 70px);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-family: 'Arial', sans-serif;
 }
 
 .lock-btn:hover {
-    background: #5a5a5a;
-    transform: translateY(-1px);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    background: #d0d0d0;
 }
 
 .lock-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    background: #c0c0c0;
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .clear-btn {
-    background: #e74c3c;
-    border-color: #c0392b;
+    background: #ff6b6b;
     color: #fff;
+    font-weight: bold;
 }
 
 .clear-btn:hover {
-    background: #f39c12;
-    border-color: #d35400;
+    background: #ff5252;
+}
+
+.clear-btn:active {
+    background: #ff4444;
 }
 
 .enter-btn {
-    background: #27ae60;
-    border-color: #229954;
+    background: #4CAF50;
     color: #fff;
+    font-weight: bold;
 }
 
 .enter-btn:hover {
-    background: #2ecc71;
-    border-color: #1e8449;
+    background: #45a049;
+}
+
+.enter-btn:active {
+    background: #3d8b40;
 }
 
 /* 문제보기 버튼 */
@@ -409,6 +413,9 @@ body {
     border-radius: 0;
     margin: 0;
     padding: clamp(20px, 5vw, 40px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .modal-header {
@@ -452,6 +459,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow: hidden;
 }
 
 #problem-modal .modal-body {
@@ -459,6 +467,7 @@ body {
     padding: 0;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .problem-image {
@@ -472,6 +481,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: calc(100vh - 120px);
 }
 
 .problem-image img {
@@ -502,11 +515,13 @@ body {
     width: 100%;
     height: 100%;
     max-height: calc(100vh - 120px);
+    overflow: auto;
+    padding: 10px;
 }
 
 #problem-modal .problem-image img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: none;
+    max-height: none;
     width: auto;
     height: auto;
     border-radius: clamp(10px, 3vw, 20px);
@@ -516,7 +531,9 @@ body {
     -webkit-user-drag: none;
     transition: transform 0.1s ease-out;
     transform-origin: center center;
-    object-fit: contain;
+    object-fit: none;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 /* 줌 힌트 */
