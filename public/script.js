@@ -400,6 +400,27 @@ class EscapeRoomGame {
             }
         });
         observer.observe(modal, { attributes: true, attributeFilter: ['style'] });
+
+        // 이미지 로드 완료 후 초기화
+        if (problemImage.complete) {
+            this.initializeImageSize(problemImage);
+        } else {
+            problemImage.addEventListener('load', () => {
+                this.initializeImageSize(problemImage);
+            });
+        }
+    }
+
+    initializeImageSize(image) {
+        // 이미지가 컨테이너보다 작으면 컨테이너에 맞춤
+        const container = image.parentElement;
+        const containerRect = container.getBoundingClientRect();
+        const imageRect = image.getBoundingClientRect();
+        
+        if (imageRect.width < containerRect.width && imageRect.height < containerRect.height) {
+            image.style.minWidth = '100%';
+            image.style.minHeight = '100%';
+        }
     }
 
     getDistance(touch1, touch2) {
@@ -430,8 +451,20 @@ class EscapeRoomGame {
         // 줌 상태에 따른 추가 스타일
         if (scale > 1) {
             image.style.zIndex = '1000';
+            image.style.position = 'relative';
         } else {
-            image.style.zIndex = 'auto';
+            image.style.zIndex = '1';
+            image.style.position = 'relative';
+        }
+        
+        // 부모 컨테이너의 overflow 설정
+        const container = image.parentElement;
+        if (container) {
+            if (scale > 1) {
+                container.style.overflow = 'auto';
+            } else {
+                container.style.overflow = 'auto';
+            }
         }
     }
 
