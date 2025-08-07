@@ -243,13 +243,13 @@ body {
 /* 자물쇠 영역 */
 .lock-area {
     position: relative;
-    width: clamp(250px, 70vw, 400px);
-    height: clamp(300px, 50vh, 450px);
-    background: #343a40;
-    border-radius: 12px;
-    padding: clamp(20px, 5vw, 30px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    border: 3px solid #495057;
+    width: clamp(280px, 75vw, 450px);
+    height: clamp(350px, 55vh, 500px);
+    background: #2c3e50;
+    border-radius: 15px;
+    padding: clamp(25px, 6vw, 35px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    border: 3px solid #34495e;
     z-index: 10;
     margin: 2rem auto;
 }
@@ -264,30 +264,30 @@ body {
 }
 
 .lock-display {
-    background: #212529;
-    border-radius: 8px;
+    background: #1a252f;
+    border-radius: 10px;
     padding: clamp(20px, 5vw, 30px);
-    box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);
-    border: 2px solid #495057;
+    box-shadow: inset 0 3px 8px rgba(0,0,0,0.9);
+    border: 2px solid #34495e;
     flex-shrink: 0;
 }
 
 .lock-screen {
     background: #000;
-    border-radius: 6px;
+    border-radius: 8px;
     padding: clamp(15px, 4vw, 25px);
     text-align: center;
-    border: 1px solid #495057;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.9);
+    border: 1px solid #34495e;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.95);
 }
 
 .lock-display span {
     font-family: 'Courier New', 'Monaco', monospace;
-    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
     font-weight: bold;
     color: #00ff00;
-    text-shadow: 0 0 8px #00ff00;
-    letter-spacing: 1px;
+    text-shadow: 0 0 10px #00ff00;
+    letter-spacing: 1.5px;
     display: block;
     position: relative;
 }
@@ -307,78 +307,99 @@ body {
 .lock-buttons {
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(8px, 2vw, 12px);
+    gap: clamp(12px, 3vw, 18px);
     flex: 1;
 }
 
 .button-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: clamp(8px, 2vw, 12px);
+    gap: clamp(12px, 3vw, 18px);
 }
 
 .lock-btn {
-    background: #f8f9fa;
-    border: 2px solid #dee2e6;
-    border-radius: 8px;
-    color: #495057;
-    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
-    font-weight: 600;
+    background: linear-gradient(145deg, #ecf0f1, #bdc3c7);
+    border: 2px solid #95a5a6;
+    border-radius: 12px;
+    color: #2c3e50;
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: clamp(50px, 12vw, 65px);
+    min-height: clamp(55px, 14vw, 75px);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 
+        0 4px 8px rgba(0,0,0,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.3);
     font-family: 'Arial', sans-serif;
     user-select: none;
     -webkit-user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.lock-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
 }
 
 .lock-btn:hover {
-    background: #e9ecef;
-    border-color: #adb5bd;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    background: linear-gradient(145deg, #d5dbdb, #aeb6bf);
+    border-color: #7f8c8d;
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 12px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+}
+
+.lock-btn:hover::before {
+    left: 100%;
 }
 
 .lock-btn:active {
-    background: #dee2e6;
+    background: linear-gradient(145deg, #bdc3c7, #ecf0f1);
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 
+        0 2px 4px rgba(0,0,0,0.3),
+        inset 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .clear-btn {
-    background: #dc3545;
-    border-color: #c82333;
-    color: #fff;
-    font-weight: bold;
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    border-color: #a93226;
+    color: white;
 }
 
 .clear-btn:hover {
-    background: #c82333;
-    border-color: #bd2130;
+    background: linear-gradient(145deg, #c0392b, #e74c3c);
+    border-color: #922b21;
 }
 
 .clear-btn:active {
-    background: #bd2130;
+    background: linear-gradient(145deg, #a93226, #c0392b);
 }
 
 .enter-btn {
-    background: #28a745;
-    border-color: #1e7e34;
-    color: #fff;
-    font-weight: bold;
+    background: linear-gradient(145deg, #27ae60, #229954);
+    border-color: #1e8449;
+    color: white;
 }
 
 .enter-btn:hover {
-    background: #1e7e34;
-    border-color: #1c7430;
+    background: linear-gradient(145deg, #229954, #27ae60);
+    border-color: #196f3d;
 }
 
 .enter-btn:active {
-    background: #1c7430;
+    background: linear-gradient(145deg, #1e8449, #229954);
 }
 
 /* 문제보기 버튼 */
@@ -800,21 +821,21 @@ body {
     }
     
     .lock-area {
-        width: clamp(320px, 60vw, 450px);
-        height: clamp(380px, 55vh, 500px);
-        border-radius: 15px;
-        padding: clamp(25px, 6vw, 35px);
+        width: clamp(350px, 65vw, 500px);
+        height: clamp(420px, 60vh, 550px);
+        border-radius: 18px;
+        padding: clamp(30px, 7vw, 40px);
         margin: 1.5rem auto;
     }
     
     .lock-btn {
-        min-height: clamp(60px, 15vw, 80px);
-        font-size: clamp(1.4rem, 4.5vw, 1.8rem);
-        border-radius: 10px;
+        min-height: clamp(65px, 16vw, 85px);
+        font-size: clamp(1.6rem, 5vw, 2rem);
+        border-radius: 15px;
     }
     
     .lock-display span {
-        font-size: clamp(1.6rem, 5vw, 2.2rem);
+        font-size: clamp(1.8rem, 6vw, 2.4rem);
     }
     
     .game-title h1 {
@@ -883,20 +904,20 @@ body {
     }
     
     .lock-area {
-        width: clamp(260px, 80vw, 320px);
-        height: clamp(340px, 60vh, 420px);
-        border-radius: 12px;
-        padding: clamp(20px, 6vw, 25px);
+        width: clamp(280px, 85vw, 350px);
+        height: clamp(380px, 65vh, 450px);
+        border-radius: 15px;
+        padding: clamp(25px, 7vw, 30px);
         margin: 1rem auto;
     }
     
     .lock-btn {
-        min-height: clamp(45px, 14vw, 60px);
-        font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+        min-height: clamp(50px, 15vw, 65px);
+        font-size: clamp(1.3rem, 5vw, 1.7rem);
     }
     
     .lock-display span {
-        font-size: clamp(1.3rem, 5vw, 1.8rem);
+        font-size: clamp(1.5rem, 6vw, 2rem);
     }
     
     .modal-content {
@@ -922,71 +943,96 @@ body {
         max-width: clamp(100px, 30vw, 150px);
     }
     
-    /* 모바일 모달 최적화 */
-    #problem-modal .modal-content {
+    /* 모바일 모달 강력한 수정 */
+    #problem-modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
         width: 100%;
         height: 100%;
-        padding: clamp(10px, 2vw, 15px);
-        overflow: hidden;
+        background-color: rgba(0,0,0,0.8);
+        backdrop-filter: blur(5px);
+    }
+    
+    #problem-modal .modal-content {
+        width: 100% !important;
+        height: 100% !important;
+        padding: clamp(10px, 2vw, 15px) !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
     
     #problem-modal .modal-header {
-        margin-bottom: clamp(10px, 2vw, 15px);
-        padding-bottom: clamp(8px, 1.5vw, 12px);
+        margin-bottom: clamp(10px, 2vw, 15px) !important;
+        padding-bottom: clamp(8px, 1.5vw, 12px) !important;
+        flex-shrink: 0 !important;
     }
     
     #problem-modal .modal-header h2 {
-        font-size: clamp(1rem, 4vw, 1.3rem);
+        font-size: clamp(1rem, 4vw, 1.3rem) !important;
     }
     
     #problem-modal .close-btn {
-        font-size: clamp(1.2rem, 5vw, 1.5rem);
-        padding: clamp(3px, 1vw, 8px);
+        font-size: clamp(1.2rem, 5vw, 1.5rem) !important;
+        padding: clamp(3px, 1vw, 8px) !important;
+    }
+    
+    #problem-modal .modal-body {
+        flex: 1 !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
     
     #problem-modal .problem-image {
-        width: 100%;
-        height: 100%;
-        max-height: calc(100vh - 80px);
-        padding: clamp(5px, 1vw, 10px);
-        overflow: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: calc(100vh - 80px) !important;
+        padding: clamp(5px, 1vw, 10px) !important;
+        overflow: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex: 1 !important;
     }
     
     #problem-modal .problem-image img {
-        max-width: 100%;
-        max-height: 100%;
-        width: auto;
-        height: auto;
-        border-radius: clamp(8px, 2vw, 12px);
-        object-fit: contain;
-        position: relative;
-        z-index: 1;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        border-radius: clamp(8px, 2vw, 12px) !important;
+        object-fit: contain !important;
+        position: relative !important;
+        z-index: 1 !important;
     }
 }
 
 /* 세로 모드 모바일 */
 @media (max-width: 767px) and (orientation: portrait) {
     .treasure-box {
-        width: clamp(280px, 85vw, 360px);
-        height: clamp(380px, 65vh, 480px);
+        width: clamp(300px, 90vw, 380px);
+        height: clamp(400px, 70vh, 500px);
     }
     
     .lock-area {
-        width: clamp(230px, 75vw, 290px);
-        height: clamp(300px, 55vh, 380px);
+        width: clamp(260px, 80vw, 320px);
+        height: clamp(350px, 60vh, 420px);
         margin: 0.8rem auto;
     }
     
     .lock-btn {
-        min-height: clamp(40px, 12vw, 55px);
-        font-size: clamp(1rem, 4vw, 1.4rem);
+        min-height: clamp(45px, 13vw, 60px);
+        font-size: clamp(1.2rem, 4.5vw, 1.6rem);
     }
     
     .lock-display span {
-        font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+        font-size: clamp(1.4rem, 5.5vw, 1.8rem);
     }
     
     .game-title {
@@ -1018,23 +1064,23 @@ body {
 /* 가로 모드 모바일 */
 @media (max-width: 767px) and (orientation: landscape) {
     .treasure-box {
-        width: clamp(240px, 45vw, 320px);
-        height: clamp(320px, 75vh, 420px);
+        width: clamp(250px, 50vw, 350px);
+        height: clamp(350px, 80vh, 450px);
     }
     
     .lock-area {
-        width: clamp(190px, 40vw, 250px);
-        height: clamp(250px, 65vh, 330px);
+        width: clamp(220px, 45vw, 280px);
+        height: clamp(300px, 70vh, 380px);
         margin: 0.5rem auto;
     }
     
     .lock-btn {
-        min-height: clamp(35px, 10vw, 50px);
-        font-size: clamp(0.9rem, 3.5vw, 1.3rem);
+        min-height: clamp(40px, 11vw, 55px);
+        font-size: clamp(1rem, 4vw, 1.4rem);
     }
     
     .lock-display span {
-        font-size: clamp(1rem, 4vw, 1.4rem);
+        font-size: clamp(1.2rem, 4.5vw, 1.6rem);
     }
     
     .game-title {
@@ -1057,44 +1103,53 @@ body {
         max-width: clamp(60px, 20vw, 100px);
     }
     
-    /* 가로 모드 모달 최적화 */
+    /* 가로 모드 모달 강력한 수정 */
     #problem-modal .modal-content {
-        padding: clamp(8px, 1.5vw, 12px);
-        overflow: hidden;
+        padding: clamp(8px, 1.5vw, 12px) !important;
+        overflow: hidden !important;
     }
     
     #problem-modal .modal-header {
-        margin-bottom: clamp(8px, 1.5vw, 12px);
-        padding-bottom: clamp(5px, 1vw, 8px);
+        margin-bottom: clamp(8px, 1.5vw, 12px) !important;
+        padding-bottom: clamp(5px, 1vw, 8px) !important;
+        flex-shrink: 0 !important;
     }
     
     #problem-modal .modal-header h2 {
-        font-size: clamp(0.8rem, 3vw, 1.1rem);
+        font-size: clamp(0.8rem, 3vw, 1.1rem) !important;
     }
     
     #problem-modal .close-btn {
-        font-size: clamp(1rem, 4vw, 1.3rem);
-        padding: clamp(2px, 0.8vw, 6px);
+        font-size: clamp(1rem, 4vw, 1.3rem) !important;
+        padding: clamp(2px, 0.8vw, 6px) !important;
+    }
+    
+    #problem-modal .modal-body {
+        flex: 1 !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
     
     #problem-modal .problem-image {
-        max-height: calc(100vh - 60px);
-        padding: clamp(3px, 0.8vw, 8px);
-        overflow: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        max-height: calc(100vh - 60px) !important;
+        padding: clamp(3px, 0.8vw, 8px) !important;
+        overflow: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex: 1 !important;
     }
     
     #problem-modal .problem-image img {
-        border-radius: clamp(6px, 1.5vw, 10px);
-        max-width: 100%;
-        max-height: 100%;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        position: relative;
-        z-index: 1;
+        border-radius: clamp(6px, 1.5vw, 10px) !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        position: relative !important;
+        z-index: 1 !important;
     }
 }
 

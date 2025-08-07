@@ -81,45 +81,68 @@ class EscapeRoomGame {
     }
 
     initializeEventListeners() {
-        // 자물쇠 버튼 이벤트 (터치 최적화)
-        document.querySelectorAll('.lock-btn').forEach(btn => {
+        // 키패드 버튼 이벤트 (터치 최적화)
+        const lockButtons = document.querySelectorAll('.lock-btn');
+        console.log('Found lock buttons:', lockButtons.length);
+        
+        lockButtons.forEach((btn, index) => {
+            console.log(`Button ${index}:`, btn.textContent, 'data-digit:', btn.dataset.digit);
+            
+            // 클릭 이벤트
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                this.handleLockButton(e.target);
+                e.stopPropagation();
+                console.log('Button clicked:', btn.textContent);
+                this.handleLockButton(btn);
             });
             
-            // 터치 이벤트 추가
+            // 터치 이벤트
             btn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                this.handleLockButton(e.target);
+                e.stopPropagation();
+                console.log('Button touched:', btn.textContent);
+                this.handleLockButton(btn);
+            }, { passive: false });
+            
+            // 터치 엔드 이벤트 (버튼 피드백)
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.addButtonFeedback(btn);
             }, { passive: false });
         });
 
         // 문제보기 버튼
         this.problemBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             this.showProblemModal();
         });
         
         this.problemBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             this.showProblemModal();
         }, { passive: false });
 
-        // 모달 닫기 버튼
+        // 모달 닫기 버튼들
         document.querySelectorAll('.close-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                this.closeModal(e.target.closest('.modal'));
+                e.stopPropagation();
+                const modal = btn.closest('.modal');
+                this.closeModal(modal);
             });
             
             btn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                this.closeModal(e.target.closest('.modal'));
+                e.stopPropagation();
+                const modal = btn.closest('.modal');
+                this.closeModal(modal);
             }, { passive: false });
         });
 
-        // 모달 외부 클릭 시 닫기
+        // 모달 배경 클릭으로 닫기
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
@@ -131,17 +154,17 @@ class EscapeRoomGame {
                 if (e.target === modal) {
                     this.closeModal(modal);
                 }
-            });
+            }, { passive: false });
         });
 
-        // 키보드 이벤트 (데스크톱에서만)
+        // 키보드 이벤트 (모바일이 아닐 때만)
         if (!this.isMobile) {
             document.addEventListener('keydown', (e) => {
                 this.handleKeyboardInput(e);
             });
         }
 
-        // 화면 방향 변경 감지
+        // 화면 회전 및 리사이즈 이벤트
         window.addEventListener('orientationchange', () => {
             setTimeout(() => {
                 this.updateLayout();
@@ -158,20 +181,33 @@ class EscapeRoomGame {
         const digit = button.dataset.digit;
         const isClear = button.classList.contains('clear-btn');
         const isEnter = button.classList.contains('enter-btn');
+        const buttonText = button.textContent.trim();
+
+        console.log('Button clicked:', buttonText, 'Digit:', digit, 'IsClear:', isClear, 'IsEnter:', isEnter);
+
+        // 버튼 피드백 추가
+        this.addButtonFeedback(button);
 
         if (isClear) {
+            console.log('Clear button pressed');
             this.clearCode();
         } else if (isEnter) {
+            console.log('Enter button pressed');
             this.submitCode();
         } else if (digit && this.currentCode.length < 7) {
+            console.log('Digit button pressed:', digit);
             this.addDigit(digit);
+        } else if (this.currentCode.length >= 7) {
+            console.log('Code is full, cannot add more digits');
+        } else {
+            console.log('Unknown button pressed:', buttonText);
         }
-
-        this.addButtonFeedback(button);
     }
 
     handleKeyboardInput(e) {
         if (this.gameCompleted) return;
+
+        console.log('Keyboard input:', e.key);
 
         if (e.key >= '0' && e.key <= '9' && this.currentCode.length < 7) {
             this.addDigit(e.key);
@@ -185,25 +221,36 @@ class EscapeRoomGame {
     addDigit(digit) {
         if (this.currentCode.length < 7) {
             this.currentCode += digit;
+            console.log('Added digit:', digit, 'Current code:', this.currentCode);
             this.updateDisplay();
         }
     }
 
     clearCode() {
         this.currentCode = '';
+        console.log('Code cleared');
         this.updateDisplay();
     }
 
     updateDisplay() {
-        this.lockDisplay.textContent = this.currentCode.padEnd(7, '0');
+        const displayText = this.currentCode.padEnd(7, '0');
+        console.log('Updating display:', displayText);
+        this.lockDisplay.textContent = displayText;
     }
 
     submitCode() {
-        if (this.currentCode.length !== 7) return;
+        console.log('Submitting code:', this.currentCode, 'Correct code:', this.correctCode);
+        
+        if (this.currentCode.length !== 7) {
+            console.log('Code length is not 7:', this.currentCode.length);
+            return;
+        }
 
         if (this.currentCode === this.correctCode) {
+            console.log('Success!');
             this.handleSuccess();
         } else {
+            console.log('Failure!');
             this.handleFailure();
         }
 
