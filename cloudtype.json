@@ -1,0 +1,21 @@
+{
+  "name": "escape-room-game",
+  "type": "static",
+  "build": {
+    "command": "",
+    "output": "public"
+  },
+  "deploy": {
+    "static": {
+      "root": "public",
+      "cleanUrls": true,
+      "trailingSlash": false
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

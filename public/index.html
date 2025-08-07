@@ -4,8 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>대강당을 탈출하자!!</title>
+    
+    <!-- PWA 메타 태그 -->
+    <meta name="description" content="대강당에서 탈출하는 방탈출 게임">
+    <meta name="theme-color" content="#764ba2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="방탈출게임">
+    
+    <!-- PWA 아이콘 -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <link rel="manifest" href="/manifest.json">
+    
     <link rel="stylesheet" href="styles.css">
-    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <!-- 게임 컨테이너 -->
@@ -127,11 +140,10 @@
             </div>
         </div>
 
-        <!-- 연결 상태 -->
-        <div id="connection-status" class="connection-status">
-            <span id="connection-indicator" class="indicator offline"></span>
-            <span id="connection-text">오프라인</span>
-        </div>
+        <!-- 리셋 버튼 -->
+        <button id="reset-btn" class="reset-btn">
+            <span>게임 리셋</span>
+        </button>
     </div>
 
     <script src="script.js"></script>

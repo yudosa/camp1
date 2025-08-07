@@ -676,3 +676,68 @@ body {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* 리셋 버튼 */
+.reset-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.reset-btn:active {
+    transform: translateY(0);
+}
+
+/* 버튼 피드백 효과 */
+.lock-btn.pressed {
+    transform: scale(0.95);
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+/* 성공 상태 */
+.treasure-box.success .box-lid {
+    transition: transform 1s ease-in-out;
+}
+
+/* 실패 애니메이션 */
+.treasure-box.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* 폭발 효과 개선 */
+.explosion.active .particle {
+    animation: explode 2s ease-out forwards;
+}
+
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x, 100px), var(--y, -100px)) scale(0);
+        opacity: 0;
+    }
+}
