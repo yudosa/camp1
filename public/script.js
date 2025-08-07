@@ -158,7 +158,7 @@ class EscapeRoomGame {
             }, { passive: false });
         });
 
-        // 다시 시도 버튼 이벤트
+        // 다시 시도 버튼 이벤트 (Added)
         const retryBtn = document.querySelector('.retry-btn');
         if (retryBtn) {
             retryBtn.addEventListener('click', (e) => {
@@ -171,6 +171,21 @@ class EscapeRoomGame {
                 e.preventDefault();
                 e.stopPropagation();
                 this.closeModal(this.failureModal);
+            }, { passive: false });
+        }
+
+        // 성공 모달 확인 버튼 이벤트 (Added)
+        const successBtn = document.querySelector('.success-btn');
+        if (successBtn) {
+            successBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.closeModal(this.successModal);
+            });
+            successBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.closeModal(this.successModal);
             }, { passive: false });
         }
 
@@ -437,21 +452,26 @@ class EscapeRoomGame {
             
             if (isFullscreen) {
                 // 전체 화면 해제
-                problemImage.style.position = 'relative';
-                problemImage.style.top = 'auto';
-                problemImage.style.left = 'auto';
-                problemImage.style.width = 'auto';
-                problemImage.style.height = 'auto';
-                problemImage.style.maxWidth = '100%';
-                problemImage.style.maxHeight = '100%';
-                problemImage.style.zIndex = '1';
-                problemImage.style.cursor = 'zoom-in';
-                problemImage.style.backgroundColor = 'transparent';
+                problemImage.style.cssText = `
+                    position: relative !important;
+                    top: auto !important;
+                    left: auto !important;
+                    width: auto !important;
+                    height: auto !important;
+                    max-width: 100% !important;
+                    max-height: 100% !important;
+                    z-index: 1 !important;
+                    cursor: zoom-in !important;
+                    background-color: transparent !important;
+                    border-radius: 8px !important;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+                    transition: all 0.3s ease !important;
+                    transform: none !important;
+                `;
                 problemImage.classList.remove('fullscreen');
                 currentScale = 1;
                 translateX = 0;
                 translateY = 0;
-                this.applyZoom(problemImage, currentScale, translateX, translateY);
                 isFullscreen = false;
                 
                 // 모달 배경 복원
@@ -461,22 +481,30 @@ class EscapeRoomGame {
                 }
             } else {
                 // 전체 화면으로 확대
-                problemImage.style.position = 'fixed';
-                problemImage.style.top = '0';
-                problemImage.style.left = '0';
-                problemImage.style.width = '100vw';
-                problemImage.style.height = '100vh';
-                problemImage.style.maxWidth = 'none';
-                problemImage.style.maxHeight = 'none';
-                problemImage.style.objectFit = 'contain';
-                problemImage.style.zIndex = '9999';
-                problemImage.style.cursor = 'zoom-out';
-                problemImage.style.backgroundColor = 'rgba(0,0,0,0.95)';
+                problemImage.style.cssText = `
+                    position: fixed !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    width: 100vw !important;
+                    height: 100vh !important;
+                    max-width: none !important;
+                    max-height: none !important;
+                    object-fit: contain !important;
+                    z-index: 9999 !important;
+                    cursor: zoom-out !important;
+                    background-color: rgba(0,0,0,0.95) !important;
+                    border-radius: 0 !important;
+                    box-shadow: none !important;
+                    transition: none !important;
+                    transform: none !important;
+                    -webkit-transform: none !important;
+                    -webkit-user-select: none !important;
+                    user-select: none !important;
+                `;
                 problemImage.classList.add('fullscreen');
                 currentScale = 1;
                 translateX = 0;
                 translateY = 0;
-                this.applyZoom(problemImage, currentScale, translateX, translateY);
                 isFullscreen = true;
                 
                 // 모달 배경 숨김
@@ -614,16 +642,22 @@ class EscapeRoomGame {
                 translateY = 0;
                 isFullscreen = false;
                 this.applyZoom(problemImage, currentScale, translateX, translateY);
-                problemImage.style.position = 'relative';
-                problemImage.style.top = 'auto';
-                problemImage.style.left = 'auto';
-                problemImage.style.width = 'auto';
-                problemImage.style.height = 'auto';
-                problemImage.style.maxWidth = '100%';
-                problemImage.style.maxHeight = '100%';
-                problemImage.style.zIndex = '1';
-                problemImage.style.cursor = 'zoom-in';
-                problemImage.style.backgroundColor = 'transparent';
+                problemImage.style.cssText = `
+                    position: relative !important;
+                    top: auto !important;
+                    left: auto !important;
+                    width: auto !important;
+                    height: auto !important;
+                    max-width: 100% !important;
+                    max-height: 100% !important;
+                    z-index: 1 !important;
+                    cursor: zoom-in !important;
+                    background-color: transparent !important;
+                    border-radius: 8px !important;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+                    transition: all 0.3s ease !important;
+                    transform: none !important;
+                `;
                 problemImage.classList.remove('fullscreen');
             }
         });
