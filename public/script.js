@@ -467,6 +467,7 @@ class EscapeRoomGame {
                     box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
                     transition: all 0.3s ease !important;
                     transform: none !important;
+                    -webkit-transform: none !important;
                 `;
                 problemImage.classList.remove('fullscreen');
                 currentScale = 1;
@@ -500,6 +501,9 @@ class EscapeRoomGame {
                     -webkit-transform: none !important;
                     -webkit-user-select: none !important;
                     user-select: none !important;
+                    pointer-events: auto !important;
+                    -webkit-touch-callout: none !important;
+                    -webkit-tap-highlight-color: transparent !important;
                 `;
                 problemImage.classList.add('fullscreen');
                 currentScale = 1;
@@ -657,6 +661,7 @@ class EscapeRoomGame {
                     box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
                     transition: all 0.3s ease !important;
                     transform: none !important;
+                    -webkit-transform: none !important;
                 `;
                 problemImage.classList.remove('fullscreen');
             }
