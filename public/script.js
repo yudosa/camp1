@@ -280,30 +280,99 @@ class EscapeRoomGame {
         this.gameCompleted = true;
         this.stopTimer();
         
-        // 서버에 성공 이벤트 전송
-        this.socket.emit('end-game', {
-            roomId: 'main-room',
-            success: true,
-            time: this.getElapsedTime()
-        });
-
-        // 성공 애니메이션
-        this.treasureBox.classList.add('success');
-        this.boxLid.style.transform = 'rotateX(-95deg)';
+        // 축하 노래 재생
+        this.playCelebrationSound();
         
         // 폭발 효과
-        setTimeout(() => {
-            this.triggerExplosion();
-        }, 500);
-
+        this.triggerExplosion();
+        
         // 성공 모달 표시
         setTimeout(() => {
             this.showSuccessModal();
         }, 1000);
-
-        // 로컬 스토리지에 성공 기록
+        
+        // 로컬 스토리지에 완료 기록
         localStorage.setItem('escapeRoomCompleted', 'true');
         localStorage.setItem('escapeRoomTime', this.getElapsedTime().toString());
+        
+        // 서버에 성공 알림
+        this.socket.emit('gameCompleted', {
+            time: this.getElapsedTime(),
+            timestamp: Date.now()
+        });
+    }
+
+    playCelebrationSound() {
+        const audio = document.getElementById('celebration-audio');
+        if (audio) {
+            // 볼륨을 적당히 설정 (0.0 ~ 1.0)
+            audio.volume = 0.7;
+            
+            // 오디오 재생 시도
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('축하 노래 재생 시작');
+                }).catch(error => {
+                    console.log('오디오 재생 실패:', error);
+                    // 사용자 상호작용이 필요한 경우를 위한 대체 처리
+                    this.showAudioPlayButton();
+                });
+            }
+        }
+    }
+
+    showAudioPlayButton() {
+        // 오디오 재생이 차단된 경우 사용자에게 알림
+        const audioBtn = document.createElement('button');
+        audioBtn.textContent = '🎵 축하 노래 재생';
+        audioBtn.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        `;
+        
+        audioBtn.addEventListener('click', () => {
+            const audio = document.getElementById('celebration-audio');
+            if (audio) {
+                audio.play().then(() => {
+                    audioBtn.remove();
+                }).catch(error => {
+                    console.log('오디오 재생 실패:', error);
+                });
+            }
+        });
+        
+        audioBtn.addEventListener('mouseenter', () => {
+            audioBtn.style.transform = 'translateY(-2px)';
+            audioBtn.style.boxShadow = '0 6px 16px rgba(0,0,0,0.4)';
+        });
+        
+        audioBtn.addEventListener('mouseleave', () => {
+            audioBtn.style.transform = 'translateY(0)';
+            audioBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+        });
+        
+        document.body.appendChild(audioBtn);
+        
+        // 10초 후 자동으로 제거
+        setTimeout(() => {
+            if (audioBtn.parentNode) {
+                audioBtn.remove();
+            }
+        }, 10000);
     }
 
     handleFailure() {
@@ -375,11 +444,19 @@ class EscapeRoomGame {
                 problemImage.style.maxHeight = '100%';
                 problemImage.style.zIndex = '1';
                 problemImage.style.cursor = 'zoom-in';
+                problemImage.style.backgroundColor = 'transparent';
+                problemImage.classList.remove('fullscreen');
                 currentScale = 1;
                 translateX = 0;
                 translateY = 0;
                 this.applyZoom(problemImage, currentScale, translateX, translateY);
                 isFullscreen = false;
+                
+                // 모달 배경 복원
+                const modal = document.getElementById('problem-modal');
+                if (modal) {
+                    modal.style.zIndex = '1000';
+                }
             } else {
                 // 전체 화면으로 확대
                 problemImage.style.position = 'fixed';
@@ -392,19 +469,27 @@ class EscapeRoomGame {
                 problemImage.style.objectFit = 'contain';
                 problemImage.style.zIndex = '9999';
                 problemImage.style.cursor = 'zoom-out';
-                problemImage.style.backgroundColor = 'rgba(0,0,0,0.9)';
+                problemImage.style.backgroundColor = 'rgba(0,0,0,0.95)';
+                problemImage.classList.add('fullscreen');
                 currentScale = 1;
                 translateX = 0;
                 translateY = 0;
                 this.applyZoom(problemImage, currentScale, translateX, translateY);
                 isFullscreen = true;
+                
+                // 모달 배경 숨김
+                const modal = document.getElementById('problem-modal');
+                if (modal) {
+                    modal.style.zIndex = '9998';
+                }
             }
         };
 
-        // 클릭 이벤트 (전체 화면 토글)
+        // 클릭 이벤트 (전체 화면 토글) - 모바일 최적화
         problemImage.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
+            console.log('Image clicked, toggling fullscreen');
             toggleFullscreen();
         });
 
@@ -446,6 +531,7 @@ class EscapeRoomGame {
             const currentTime = new Date().getTime();
             const tapLength = currentTime - lastTouchTime;
             if (tapLength < 500 && tapLength > 0) {
+                console.log('Double tap detected');
                 if (isFullscreen) {
                     toggleFullscreen();
                 } else {
@@ -471,6 +557,7 @@ class EscapeRoomGame {
         problemImage.addEventListener('dblclick', (e) => {
             e.preventDefault();
             e.stopPropagation();
+            console.log('Double click detected');
             if (isFullscreen) {
                 toggleFullscreen();
             } else {
@@ -511,6 +598,7 @@ class EscapeRoomGame {
         // ESC 키로 전체 화면 해제
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && isFullscreen) {
+                console.log('ESC key pressed, exiting fullscreen');
                 toggleFullscreen();
             }
         });
@@ -534,6 +622,7 @@ class EscapeRoomGame {
                 problemImage.style.zIndex = '1';
                 problemImage.style.cursor = 'zoom-in';
                 problemImage.style.backgroundColor = 'transparent';
+                problemImage.classList.remove('fullscreen');
             }
         });
         observer.observe(modal, { attributes: true, attributeFilter: ['style'] });

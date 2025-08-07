@@ -82,8 +82,8 @@
                         <button class="lock-btn" data-digit="9">9</button>
                     </div>
                     <div class="button-row">
-                        <button class="lock-btn" data-digit="0">0</button>
                         <button class="lock-btn clear-btn">지움</button>
+                        <button class="lock-btn" data-digit="0">0</button>
                         <button class="lock-btn enter-btn">확인</button>
                     </div>
                 </div>
@@ -93,6 +93,11 @@
         <!-- 로고 -->
         <div class="logo-container">
             <img src="logo2.png" alt="로고" class="logo-image">
+        </div>
+
+        <!-- 다음 미션지 이동 문구 -->
+        <div class="mission-text">
+            <p>다음 미션지로 이동하세요</p>
         </div>
 
         <!-- 문제보기 버튼 -->
@@ -166,6 +171,12 @@
             <div class="particle"></div>
             <div class="particle"></div>
         </div>
+
+        <!-- 축하 노래 오디오 -->
+        <audio id="celebration-audio" preload="auto">
+            <source src="celebration.mp3" type="audio/mpeg">
+            <source src="celebration.ogg" type="audio/ogg">
+        </audio>
 
         <!-- 게임 상태 표시 -->
         <div id="game-status" class="game-status">
