@@ -360,12 +360,58 @@ class EscapeRoomGame {
         let translateX = 0;
         let translateY = 0;
         let lastTouchTime = 0;
+        let isFullscreen = false;
+
+        // 전체 화면 모드 토글 함수
+        const toggleFullscreen = () => {
+            if (isFullscreen) {
+                // 전체 화면 해제
+                problemImage.style.position = 'relative';
+                problemImage.style.top = 'auto';
+                problemImage.style.left = 'auto';
+                problemImage.style.width = 'auto';
+                problemImage.style.height = 'auto';
+                problemImage.style.maxWidth = '100%';
+                problemImage.style.maxHeight = '100%';
+                problemImage.style.zIndex = '1';
+                problemImage.style.cursor = 'zoom-in';
+                currentScale = 1;
+                translateX = 0;
+                translateY = 0;
+                this.applyZoom(problemImage, currentScale, translateX, translateY);
+                isFullscreen = false;
+            } else {
+                // 전체 화면으로 확대
+                problemImage.style.position = 'fixed';
+                problemImage.style.top = '0';
+                problemImage.style.left = '0';
+                problemImage.style.width = '100vw';
+                problemImage.style.height = '100vh';
+                problemImage.style.maxWidth = 'none';
+                problemImage.style.maxHeight = 'none';
+                problemImage.style.objectFit = 'contain';
+                problemImage.style.zIndex = '9999';
+                problemImage.style.cursor = 'zoom-out';
+                problemImage.style.backgroundColor = 'rgba(0,0,0,0.9)';
+                currentScale = 1;
+                translateX = 0;
+                translateY = 0;
+                this.applyZoom(problemImage, currentScale, translateX, translateY);
+                isFullscreen = true;
+            }
+        };
+
+        // 클릭 이벤트 (전체 화면 토글)
+        problemImage.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFullscreen();
+        });
 
         // 터치 이벤트 (핀치 줌)
         problemImage.addEventListener('touchstart', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
             if (e.touches.length === 2) {
                 initialDistance = this.getDistance(e.touches[0], e.touches[1]);
                 initialScale = currentScale;
@@ -379,11 +425,10 @@ class EscapeRoomGame {
         problemImage.addEventListener('touchmove', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
             if (e.touches.length === 2) {
                 const currentDistance = this.getDistance(e.touches[0], e.touches[1]);
                 const scale = (currentDistance / initialDistance) * initialScale;
-                currentScale = Math.min(Math.max(scale, 0.5), 5); // 0.5배 ~ 5배 제한
+                currentScale = Math.min(Math.max(scale, 0.5), 5);
                 this.applyZoom(problemImage, currentScale, translateX, translateY);
             } else if (e.touches.length === 1 && isDragging && currentScale > 1) {
                 translateX = e.touches[0].clientX - startX;
@@ -395,18 +440,20 @@ class EscapeRoomGame {
         problemImage.addEventListener('touchend', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
             isDragging = false;
             
             // 더블 탭으로 리셋
             const currentTime = new Date().getTime();
             const tapLength = currentTime - lastTouchTime;
             if (tapLength < 500 && tapLength > 0) {
-                // 더블 탭
-                currentScale = 1;
-                translateX = 0;
-                translateY = 0;
-                this.applyZoom(problemImage, currentScale, translateX, translateY);
+                if (isFullscreen) {
+                    toggleFullscreen();
+                } else {
+                    currentScale = 1;
+                    translateX = 0;
+                    translateY = 0;
+                    this.applyZoom(problemImage, currentScale, translateX, translateY);
+                }
             }
             lastTouchTime = currentTime;
         });
@@ -415,7 +462,6 @@ class EscapeRoomGame {
         problemImage.addEventListener('wheel', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
             const delta = e.deltaY > 0 ? 0.9 : 1.1;
             currentScale = Math.min(Math.max(currentScale * delta, 0.5), 5);
             this.applyZoom(problemImage, currentScale, translateX, translateY);
@@ -425,11 +471,14 @@ class EscapeRoomGame {
         problemImage.addEventListener('dblclick', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
-            currentScale = 1;
-            translateX = 0;
-            translateY = 0;
-            this.applyZoom(problemImage, currentScale, translateX, translateY);
+            if (isFullscreen) {
+                toggleFullscreen();
+            } else {
+                currentScale = 1;
+                translateX = 0;
+                translateY = 0;
+                this.applyZoom(problemImage, currentScale, translateX, translateY);
+            }
         });
 
         // 마우스 드래그 (데스크톱)
@@ -459,6 +508,13 @@ class EscapeRoomGame {
             }
         });
 
+        // ESC 키로 전체 화면 해제
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isFullscreen) {
+                toggleFullscreen();
+            }
+        });
+
         // 모달이 닫힐 때 줌 리셋
         const modal = document.getElementById('problem-modal');
         const observer = new MutationObserver(() => {
@@ -466,7 +522,18 @@ class EscapeRoomGame {
                 currentScale = 1;
                 translateX = 0;
                 translateY = 0;
+                isFullscreen = false;
                 this.applyZoom(problemImage, currentScale, translateX, translateY);
+                problemImage.style.position = 'relative';
+                problemImage.style.top = 'auto';
+                problemImage.style.left = 'auto';
+                problemImage.style.width = 'auto';
+                problemImage.style.height = 'auto';
+                problemImage.style.maxWidth = '100%';
+                problemImage.style.maxHeight = '100%';
+                problemImage.style.zIndex = '1';
+                problemImage.style.cursor = 'zoom-in';
+                problemImage.style.backgroundColor = 'transparent';
             }
         });
         observer.observe(modal, { attributes: true, attributeFilter: ['style'] });

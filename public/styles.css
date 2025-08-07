@@ -262,30 +262,39 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: clamp(20px, 5vw, 30px);
+    gap: clamp(15px, 3vw, 20px);
 }
 
 .lock-display {
     background: #1a252f;
     border-radius: 10px;
-    padding: clamp(20px, 5vw, 30px);
+    padding: clamp(15px, 3vw, 20px);
     box-shadow: inset 0 3px 8px rgba(0,0,0,0.9);
     border: 2px solid #34495e;
     flex-shrink: 0;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .lock-screen {
     background: #000;
     border-radius: 8px;
-    padding: clamp(15px, 4vw, 25px);
+    padding: clamp(10px, 2.5vw, 15px);
     text-align: center;
     border: 1px solid #34495e;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.95);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .lock-display span {
     font-family: 'Courier New', 'Monaco', monospace;
-    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
     font-weight: bold;
     color: #00ff00;
     text-shadow: 0 0 10px #00ff00;
@@ -309,14 +318,16 @@ body {
 .lock-buttons {
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(12px, 3vw, 18px);
+    gap: clamp(8px, 2vw, 12px);
     flex: 1;
+    height: 75%;
 }
 
 .button-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: clamp(12px, 3vw, 18px);
+    gap: clamp(8px, 2vw, 12px);
+    flex: 1;
 }
 
 .lock-btn {
@@ -324,11 +335,11 @@ body {
     border: 2px solid #95a5a6;
     border-radius: 12px;
     color: #2c3e50;
-    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: clamp(55px, 14vw, 75px);
+    min-height: clamp(45px, 12vw, 60px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -340,6 +351,7 @@ body {
     -webkit-user-select: none;
     position: relative;
     overflow: hidden;
+    flex: 1;
 }
 
 .lock-btn::before {
@@ -586,16 +598,22 @@ body {
     max-height: 100%;
     width: auto;
     height: auto;
-    border-radius: clamp(10px, 3vw, 20px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-    cursor: zoom-in;
-    user-select: none;
-    -webkit-user-drag: none;
-    transition: transform 0.1s ease-out;
-    transform-origin: center center;
     object-fit: contain;
     position: relative;
     z-index: 1;
+    cursor: zoom-in;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+#problem-modal .problem-image img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+#problem-modal .problem-image img:active {
+    transform: scale(0.98);
 }
 
 /* 줌 힌트 */
@@ -680,53 +698,69 @@ body {
 
 /* 실패 모달 스타일 */
 .failure-content {
-    background: linear-gradient(135deg, #dc3545, #e74c3c);
-}
-
-.failure-content .modal-header {
-    border-bottom-color: rgba(255,255,255,0.3);
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 2px solid #c0392b;
+    max-width: 400px;
+    width: 90%;
+    max-height: 300px;
+    height: auto;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
 }
 
 .failure-message {
     text-align: center;
+    padding: clamp(20px, 4vw, 30px);
 }
 
 .failure-message h3 {
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
-    margin-bottom: 1rem;
     color: white;
+    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+    margin-bottom: clamp(10px, 2vw, 15px);
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .failure-message p {
-    font-size: clamp(1rem, 3vw, 1.3rem);
-    margin-bottom: 1.5rem;
-    color: rgba(255,255,255,0.9);
+    color: #f8f9fa;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    margin-bottom: clamp(15px, 3vw, 20px);
+    line-height: 1.4;
 }
 
 .failure-actions {
-    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 2vw, 15px);
 }
 
 .retry-btn {
     background: rgba(255,255,255,0.2);
-    border: 2px solid rgba(255,255,255,0.3);
     color: white;
-    padding: clamp(10px, 3vw, 15px) clamp(20px, 5vw, 30px);
-    border-radius: 8px;
-    font-size: clamp(1rem, 3vw, 1.2rem);
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: clamp(8px, 2vw, 12px) clamp(20px, 4vw, 30px);
+    border-radius: 25px;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 600;
+    backdrop-filter: blur(10px);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .retry-btn:hover {
     background: rgba(255,255,255,0.3);
     border-color: rgba(255,255,255,0.5);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .retry-btn:active {
     transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 /* 폭발 효과 */
@@ -847,19 +881,19 @@ body {
 
 /* 로고 */
 .logo-container {
-    position: fixed;
+    position: absolute;
     bottom: clamp(20px, 5vw, 40px);
     left: 50%;
     transform: translateX(-50%);
-    z-index: 15;
+    z-index: 10;
     text-align: center;
 }
 
 .logo-image {
-    max-width: clamp(180px, 37.5vw, 300px);
+    max-width: clamp(200px, 25vw, 350px);
     height: auto;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+    display: block;
+    margin: 0 auto;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
 }
 
@@ -879,18 +913,32 @@ body {
         width: clamp(250px, 50vw, 380px);
         height: clamp(320px, 45vh, 420px);
         border-radius: 18px;
-        padding: clamp(22px, 5vw, 30px);
+        padding: clamp(20px, 4vw, 28px);
         z-index: 15;
     }
     
-    .lock-btn {
-        min-height: clamp(60px, 14vw, 80px);
-        font-size: clamp(1.5rem, 4.5vw, 1.9rem);
-        border-radius: 15px;
+    .lock-display {
+        height: 25%;
+        padding: clamp(12px, 2.5vw, 18px);
     }
     
     .lock-display span {
-        font-size: clamp(1.7rem, 5.5vw, 2.3rem);
+        font-size: clamp(1.5rem, 4.5vw, 2rem);
+    }
+    
+    .lock-buttons {
+        height: 75%;
+        gap: clamp(10px, 2.5vw, 15px);
+    }
+    
+    .button-row {
+        gap: clamp(10px, 2.5vw, 15px);
+    }
+    
+    .lock-btn {
+        min-height: clamp(55px, 13vw, 70px);
+        font-size: clamp(1.3rem, 4vw, 1.7rem);
+        border-radius: 15px;
     }
     
     .game-title h1 {
@@ -899,6 +947,10 @@ body {
     
     .game-title p {
         font-size: clamp(1rem, 2.5vw, 1.3rem);
+    }
+    
+    .logo-container {
+        bottom: clamp(15px, 3vw, 30px);
     }
     
     .logo-image {
@@ -963,17 +1015,31 @@ body {
         width: clamp(180px, 65vw, 250px);
         height: clamp(220px, 45vh, 280px);
         border-radius: 15px;
-        padding: clamp(15px, 4vw, 22px);
+        padding: clamp(12px, 3vw, 18px);
         z-index: 15;
     }
     
-    .lock-btn {
-        min-height: clamp(45px, 12vw, 60px);
-        font-size: clamp(1.2rem, 4vw, 1.6rem);
+    .lock-display {
+        height: 25%;
+        padding: clamp(8px, 2vw, 12px);
     }
     
     .lock-display span {
-        font-size: clamp(1.4rem, 5vw, 1.8rem);
+        font-size: clamp(1.2rem, 4vw, 1.6rem);
+    }
+    
+    .lock-buttons {
+        height: 75%;
+        gap: clamp(6px, 1.5vw, 10px);
+    }
+    
+    .button-row {
+        gap: clamp(6px, 1.5vw, 10px);
+    }
+    
+    .lock-btn {
+        min-height: clamp(40px, 10vw, 55px);
+        font-size: clamp(1rem, 3.5vw, 1.4rem);
     }
     
     .modal-content {
@@ -992,7 +1058,7 @@ body {
     }
     
     .logo-container {
-        bottom: clamp(15px, 4vw, 30px);
+        bottom: clamp(10px, 2.5vw, 20px);
     }
     
     .logo-image {
@@ -1083,13 +1149,27 @@ body {
         z-index: 15;
     }
     
-    .lock-btn {
-        min-height: clamp(40px, 11vw, 55px);
-        font-size: clamp(1.1rem, 4vw, 1.5rem);
+    .lock-display {
+        height: 25%;
+        padding: clamp(6px, 1.5vw, 10px);
     }
     
     .lock-display span {
-        font-size: clamp(1.3rem, 5vw, 1.7rem);
+        font-size: clamp(1rem, 3.5vw, 1.4rem);
+    }
+    
+    .lock-buttons {
+        height: 75%;
+        gap: clamp(4px, 1vw, 8px);
+    }
+    
+    .button-row {
+        gap: clamp(4px, 1vw, 8px);
+    }
+    
+    .lock-btn {
+        min-height: clamp(35px, 9vw, 50px);
+        font-size: clamp(0.9rem, 3vw, 1.3rem);
     }
     
     .game-title {
@@ -1105,7 +1185,7 @@ body {
     }
     
     .logo-container {
-        bottom: clamp(10px, 3vw, 25px);
+        bottom: clamp(8px, 2vw, 15px);
     }
     
     .logo-image {
@@ -1132,13 +1212,27 @@ body {
         z-index: 15;
     }
     
-    .lock-btn {
-        min-height: clamp(35px, 9vw, 50px);
-        font-size: clamp(0.9rem, 3.5vw, 1.3rem);
+    .lock-display {
+        height: 25%;
+        padding: clamp(4px, 1vw, 8px);
     }
     
     .lock-display span {
-        font-size: clamp(1.1rem, 4vw, 1.5rem);
+        font-size: clamp(0.8rem, 3vw, 1.2rem);
+    }
+    
+    .lock-buttons {
+        height: 75%;
+        gap: clamp(3px, 0.8vw, 6px);
+    }
+    
+    .button-row {
+        gap: clamp(3px, 0.8vw, 6px);
+    }
+    
+    .lock-btn {
+        min-height: clamp(30px, 8vw, 45px);
+        font-size: clamp(0.8rem, 2.5vw, 1.1rem);
     }
     
     .game-title {
@@ -1154,7 +1248,7 @@ body {
     }
     
     .logo-container {
-        bottom: clamp(8px, 2vw, 20px);
+        bottom: clamp(5px, 1.5vw, 12px);
     }
     
     .logo-image {
@@ -1220,6 +1314,62 @@ body {
         z-index: 1 !important;
         margin: 0 !important;
         padding: 0 !important;
+    }
+}
+
+/* 모바일에서 실패 모달 크기 조정 */
+@media (max-width: 767px) {
+    .failure-content {
+        max-width: 320px;
+        max-height: 250px;
+        width: 85%;
+    }
+    
+    .failure-message {
+        padding: clamp(15px, 3vw, 20px);
+    }
+    
+    .failure-message h3 {
+        font-size: clamp(1rem, 3vw, 1.3rem);
+        margin-bottom: clamp(8px, 1.5vw, 12px);
+    }
+    
+    .failure-message p {
+        font-size: clamp(0.8rem, 2.2vw, 1rem);
+        margin-bottom: clamp(12px, 2.5vw, 16px);
+    }
+    
+    .retry-btn {
+        padding: clamp(6px, 1.5vw, 10px) clamp(16px, 3.5vw, 24px);
+        font-size: clamp(0.8rem, 2.2vw, 1rem);
+    }
+}
+
+/* 태블릿에서 실패 모달 크기 조정 */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .failure-content {
+        max-width: 350px;
+        max-height: 280px;
+        width: 80%;
+    }
+    
+    .failure-message {
+        padding: clamp(18px, 3.5vw, 25px);
+    }
+    
+    .failure-message h3 {
+        font-size: clamp(1.1rem, 3.2vw, 1.4rem);
+        margin-bottom: clamp(12px, 2.2vw, 14px);
+    }
+    
+    .failure-message p {
+        font-size: clamp(0.85rem, 2.3vw, 1.05rem);
+        margin-bottom: clamp(14px, 2.8vw, 18px);
+    }
+    
+    .retry-btn {
+        padding: clamp(7px, 1.8vw, 11px) clamp(18px, 3.8vw, 26px);
+        font-size: clamp(0.85rem, 2.3vw, 1.05rem);
     }
 }
 
