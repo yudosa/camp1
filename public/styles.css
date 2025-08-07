@@ -114,8 +114,8 @@ body {
 /* 보물상자 */
 .treasure-box {
     position: relative;
-    width: clamp(300px, 80vw, 500px);
-    height: clamp(400px, 60vh, 600px);
+    width: clamp(350px, 85vw, 600px);
+    height: clamp(450px, 70vh, 700px);
     perspective: 1200px;
     margin: 1rem auto;
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
@@ -243,11 +243,11 @@ body {
 /* 자물쇠 영역 */
 .lock-area {
     position: relative;
-    width: clamp(280px, 75vw, 450px);
-    height: clamp(350px, 55vh, 500px);
+    width: clamp(220px, 60vw, 350px);
+    height: clamp(280px, 45vh, 400px);
     background: #2c3e50;
     border-radius: 15px;
-    padding: clamp(25px, 6vw, 35px);
+    padding: clamp(20px, 5vw, 30px);
     box-shadow: 0 12px 30px rgba(0,0,0,0.4);
     border: 3px solid #34495e;
     z-index: 10;
@@ -634,45 +634,97 @@ body {
 }
 
 .success-content {
-    text-align: center;
+    background: linear-gradient(135deg, #28a745, #20c997);
 }
 
 .success-content .modal-header {
-    justify-content: center;
+    border-bottom-color: rgba(255,255,255,0.3);
 }
 
 .success-message {
-    padding: clamp(20px, 5vw, 40px) 0;
+    text-align: center;
 }
 
 .success-message h3 {
-    font-size: clamp(1.3rem, 4vw, 2rem);
-    margin-bottom: clamp(15px, 4vw, 25px);
-    color: #ffd700;
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    margin-bottom: 1rem;
+    color: white;
 }
 
 .success-message p {
     font-size: clamp(1rem, 3vw, 1.3rem);
-    margin-bottom: clamp(10px, 3vw, 15px);
+    margin-bottom: 1.5rem;
+    color: rgba(255,255,255,0.9);
 }
 
 .next-location {
     background: rgba(255,255,255,0.1);
     padding: clamp(15px, 4vw, 25px);
-    border-radius: clamp(10px, 3vw, 15px);
-    margin-top: clamp(15px, 4vw, 25px);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .next-location h4 {
-    font-size: clamp(1rem, 3vw, 1.3rem);
-    margin-bottom: clamp(8px, 2vw, 12px);
-    color: #ffd700;
+    font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+    margin-bottom: 0.5rem;
+    color: white;
 }
 
 .next-location p {
-    font-size: clamp(1.1rem, 3.5vw, 1.5rem);
-    font-weight: bold;
-    color: #00ff00;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    color: rgba(255,255,255,0.9);
+    margin: 0;
+}
+
+/* 실패 모달 스타일 */
+.failure-content {
+    background: linear-gradient(135deg, #dc3545, #e74c3c);
+}
+
+.failure-content .modal-header {
+    border-bottom-color: rgba(255,255,255,0.3);
+}
+
+.failure-message {
+    text-align: center;
+}
+
+.failure-message h3 {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.failure-message p {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    margin-bottom: 1.5rem;
+    color: rgba(255,255,255,0.9);
+}
+
+.failure-actions {
+    margin-top: 1.5rem;
+}
+
+.retry-btn {
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: clamp(10px, 3vw, 15px) clamp(20px, 5vw, 30px);
+    border-radius: 8px;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.retry-btn:hover {
+    background: rgba(255,255,255,0.3);
+    border-color: rgba(255,255,255,0.5);
+    transform: translateY(-2px);
+}
+
+.retry-btn:active {
+    transform: translateY(0);
 }
 
 /* 폭발 효과 */
@@ -802,7 +854,7 @@ body {
 }
 
 .logo-image {
-    max-width: clamp(120px, 25vw, 200px);
+    max-width: clamp(180px, 37.5vw, 300px);
     height: auto;
     opacity: 0.8;
     transition: opacity 0.3s ease;
@@ -816,26 +868,26 @@ body {
 /* 태블릿 최적화 */
 @media (min-width: 768px) and (max-width: 1024px) {
     .treasure-box {
-        width: clamp(400px, 70vw, 550px);
-        height: clamp(500px, 65vh, 650px);
+        width: clamp(450px, 75vw, 650px);
+        height: clamp(550px, 70vh, 750px);
     }
     
     .lock-area {
-        width: clamp(350px, 65vw, 500px);
-        height: clamp(420px, 60vh, 550px);
+        width: clamp(280px, 55vw, 400px);
+        height: clamp(350px, 50vh, 450px);
         border-radius: 18px;
-        padding: clamp(30px, 7vw, 40px);
+        padding: clamp(25px, 6vw, 35px);
         margin: 1.5rem auto;
     }
     
     .lock-btn {
-        min-height: clamp(65px, 16vw, 85px);
-        font-size: clamp(1.6rem, 5vw, 2rem);
+        min-height: clamp(60px, 14vw, 80px);
+        font-size: clamp(1.5rem, 4.5vw, 1.9rem);
         border-radius: 15px;
     }
     
     .lock-display span {
-        font-size: clamp(1.8rem, 6vw, 2.4rem);
+        font-size: clamp(1.7rem, 5.5vw, 2.3rem);
     }
     
     .game-title h1 {
@@ -847,7 +899,7 @@ body {
     }
     
     .logo-image {
-        max-width: clamp(150px, 20vw, 250px);
+        max-width: clamp(225px, 30vw, 375px);
     }
     
     /* 태블릿 모달 최적화 */
@@ -899,25 +951,25 @@ body {
     }
     
     .treasure-box {
-        width: clamp(320px, 90vw, 400px);
-        height: clamp(420px, 70vh, 520px);
+        width: clamp(320px, 90vw, 420px);
+        height: clamp(420px, 70vh, 550px);
     }
     
     .lock-area {
-        width: clamp(280px, 85vw, 350px);
-        height: clamp(380px, 65vh, 450px);
+        width: clamp(200px, 70vw, 280px);
+        height: clamp(250px, 50vh, 320px);
         border-radius: 15px;
-        padding: clamp(25px, 7vw, 30px);
+        padding: clamp(18px, 5vw, 25px);
         margin: 1rem auto;
     }
     
     .lock-btn {
-        min-height: clamp(50px, 15vw, 65px);
-        font-size: clamp(1.3rem, 5vw, 1.7rem);
+        min-height: clamp(45px, 12vw, 60px);
+        font-size: clamp(1.2rem, 4vw, 1.6rem);
     }
     
     .lock-display span {
-        font-size: clamp(1.5rem, 6vw, 2rem);
+        font-size: clamp(1.4rem, 5vw, 1.8rem);
     }
     
     .modal-content {
@@ -940,7 +992,7 @@ body {
     }
     
     .logo-image {
-        max-width: clamp(100px, 30vw, 150px);
+        max-width: clamp(150px, 45vw, 225px);
     }
     
     /* 모바일 모달 강력한 수정 */
@@ -1016,23 +1068,23 @@ body {
 /* 세로 모드 모바일 */
 @media (max-width: 767px) and (orientation: portrait) {
     .treasure-box {
-        width: clamp(300px, 90vw, 380px);
-        height: clamp(400px, 70vh, 500px);
+        width: clamp(300px, 85vw, 380px);
+        height: clamp(400px, 65vh, 500px);
     }
     
     .lock-area {
-        width: clamp(260px, 80vw, 320px);
-        height: clamp(350px, 60vh, 420px);
+        width: clamp(180px, 65vw, 250px);
+        height: clamp(220px, 45vh, 280px);
         margin: 0.8rem auto;
     }
     
     .lock-btn {
-        min-height: clamp(45px, 13vw, 60px);
-        font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+        min-height: clamp(40px, 11vw, 55px);
+        font-size: clamp(1.1rem, 4vw, 1.5rem);
     }
     
     .lock-display span {
-        font-size: clamp(1.4rem, 5.5vw, 1.8rem);
+        font-size: clamp(1.3rem, 5vw, 1.7rem);
     }
     
     .game-title {
@@ -1052,7 +1104,7 @@ body {
     }
     
     .logo-image {
-        max-width: clamp(80px, 25vw, 120px);
+        max-width: clamp(120px, 37.5vw, 180px);
     }
     
     /* 세로 모드 모달 최적화 */
@@ -1064,23 +1116,23 @@ body {
 /* 가로 모드 모바일 */
 @media (max-width: 767px) and (orientation: landscape) {
     .treasure-box {
-        width: clamp(250px, 50vw, 350px);
-        height: clamp(350px, 80vh, 450px);
+        width: clamp(250px, 55vw, 350px);
+        height: clamp(350px, 75vh, 450px);
     }
     
     .lock-area {
-        width: clamp(220px, 45vw, 280px);
-        height: clamp(300px, 70vh, 380px);
+        width: clamp(160px, 40vw, 220px);
+        height: clamp(200px, 55vh, 260px);
         margin: 0.5rem auto;
     }
     
     .lock-btn {
-        min-height: clamp(40px, 11vw, 55px);
-        font-size: clamp(1rem, 4vw, 1.4rem);
+        min-height: clamp(35px, 9vw, 50px);
+        font-size: clamp(0.9rem, 3.5vw, 1.3rem);
     }
     
     .lock-display span {
-        font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+        font-size: clamp(1.1rem, 4vw, 1.5rem);
     }
     
     .game-title {
@@ -1100,28 +1152,35 @@ body {
     }
     
     .logo-image {
-        max-width: clamp(60px, 20vw, 100px);
+        max-width: clamp(90px, 30vw, 150px);
     }
     
     /* 가로 모드 모달 강력한 수정 */
     #problem-modal .modal-content {
-        padding: clamp(8px, 1.5vw, 12px) !important;
+        padding: clamp(5px, 1vw, 8px) !important;
         overflow: hidden !important;
+        height: 100vh !important;
+        width: 100vw !important;
     }
     
     #problem-modal .modal-header {
-        margin-bottom: clamp(8px, 1.5vw, 12px) !important;
-        padding-bottom: clamp(5px, 1vw, 8px) !important;
+        margin-bottom: clamp(3px, 0.8vw, 6px) !important;
+        padding-bottom: clamp(2px, 0.4vw, 4px) !important;
         flex-shrink: 0 !important;
+        min-height: auto !important;
     }
     
     #problem-modal .modal-header h2 {
-        font-size: clamp(0.8rem, 3vw, 1.1rem) !important;
+        font-size: clamp(0.6rem, 2vw, 0.9rem) !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     
     #problem-modal .close-btn {
-        font-size: clamp(1rem, 4vw, 1.3rem) !important;
-        padding: clamp(2px, 0.8vw, 6px) !important;
+        font-size: clamp(0.7rem, 2.5vw, 1rem) !important;
+        padding: clamp(1px, 0.3vw, 3px) !important;
+        min-width: auto !important;
+        min-height: auto !important;
     }
     
     #problem-modal .modal-body {
@@ -1129,20 +1188,23 @@ body {
         overflow: hidden !important;
         display: flex !important;
         flex-direction: column !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
     
     #problem-modal .problem-image {
-        max-height: calc(100vh - 60px) !important;
-        padding: clamp(3px, 0.8vw, 8px) !important;
+        max-height: calc(100vh - 30px) !important;
+        padding: clamp(1px, 0.3vw, 3px) !important;
         overflow: auto !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         flex: 1 !important;
+        margin: 0 !important;
     }
     
     #problem-modal .problem-image img {
-        border-radius: clamp(6px, 1.5vw, 10px) !important;
+        border-radius: clamp(3px, 0.8vw, 6px) !important;
         max-width: 100% !important;
         max-height: 100% !important;
         width: auto !important;
@@ -1150,6 +1212,8 @@ body {
         object-fit: contain !important;
         position: relative !important;
         z-index: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 }
 

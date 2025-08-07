@@ -50,6 +50,7 @@ class EscapeRoomGame {
         this.problemBtn = document.getElementById('problem-btn');
         this.problemModal = document.getElementById('problem-modal');
         this.successModal = document.getElementById('success-modal');
+        this.failureModal = document.getElementById('failure-modal');
         this.explosion = document.getElementById('explosion');
     }
 
@@ -157,6 +158,22 @@ class EscapeRoomGame {
             }, { passive: false });
         });
 
+        // 다시 시도 버튼 이벤트
+        const retryBtn = document.querySelector('.retry-btn');
+        if (retryBtn) {
+            retryBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.closeModal(this.failureModal);
+            });
+            
+            retryBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.closeModal(this.failureModal);
+            }, { passive: false });
+        }
+
         // 키보드 이벤트 (모바일이 아닐 때만)
         if (!this.isMobile) {
             document.addEventListener('keydown', (e) => {
@@ -243,6 +260,7 @@ class EscapeRoomGame {
         
         if (this.currentCode.length !== 7) {
             console.log('Code length is not 7:', this.currentCode.length);
+            this.handleFailure();
             return;
         }
 
@@ -295,10 +313,15 @@ class EscapeRoomGame {
             this.treasureBox.classList.remove('shake');
         }, 500);
 
-        // 모바일에서 진동 피드백 (선택사항)
+        // 모바일에서 진동
         if (this.isMobile && navigator.vibrate) {
             navigator.vibrate(200);
         }
+
+        // 실패 모달 표시
+        setTimeout(() => {
+            this.showFailureModal();
+        }, 300);
     }
 
     triggerExplosion() {
@@ -518,7 +541,13 @@ class EscapeRoomGame {
 
     showSuccessModal() {
         this.successModal.style.display = 'block';
-        // 모바일에서 스크롤 방지
+        if (this.isMobile) {
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    showFailureModal() {
+        this.failureModal.style.display = 'block';
         if (this.isMobile) {
             document.body.style.overflow = 'hidden';
         }
