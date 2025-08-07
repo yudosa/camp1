@@ -412,14 +412,15 @@ class EscapeRoomGame {
     }
 
     initializeImageSize(image) {
-        // 이미지가 컨테이너보다 작으면 컨테이너에 맞춤
+        // 이미지가 컨테이너에 맞춰 표시되도록 설정
         const container = image.parentElement;
-        const containerRect = container.getBoundingClientRect();
-        const imageRect = image.getBoundingClientRect();
-        
-        if (imageRect.width < containerRect.width && imageRect.height < containerRect.height) {
-            image.style.minWidth = '100%';
-            image.style.minHeight = '100%';
+        if (container) {
+            // 이미지가 컨테이너보다 크면 축소, 작으면 확대
+            image.style.maxWidth = '100%';
+            image.style.maxHeight = '100%';
+            image.style.width = 'auto';
+            image.style.height = 'auto';
+            image.style.objectFit = 'contain';
         }
     }
 
