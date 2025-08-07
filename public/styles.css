@@ -28,6 +28,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 10px;
+    overflow: hidden;
 }
 
 /* 배경 */
@@ -60,6 +61,7 @@ body {
     box-shadow: 
         0 8px 32px rgba(0,0,0,0.3),
         inset 0 1px 0 rgba(255,255,255,0.2);
+    max-width: 90vw;
 }
 
 .game-title h1 {
@@ -67,16 +69,10 @@ body {
     margin-bottom: 0.5rem;
     font-weight: bold;
     line-height: 1.2;
-    background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: titleGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes titleGlow {
-    0% { filter: drop-shadow(0 0 5px rgba(255,215,0,0.5)); }
-    100% { filter: drop-shadow(0 0 20px rgba(255,215,0,0.8)); }
+    color: #000000;
+    text-shadow: 
+        2px 2px 4px rgba(255,255,255,0.8),
+        0 0 10px rgba(255,255,255,0.5);
 }
 
 .game-title p {
@@ -90,12 +86,13 @@ body {
 /* 보물상자 */
 .treasure-box {
     position: relative;
-    width: clamp(280px, 85vw, 450px);
-    height: clamp(350px, 55vh, 550px);
+    width: clamp(250px, 75vw, 400px);
+    height: clamp(320px, 50vh, 500px);
     perspective: 1200px;
     margin: 1rem auto;
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
     transform-style: preserve-3d;
+    z-index: 5;
 }
 
 .box-lid {
@@ -215,19 +212,20 @@ body {
         0 2px 4px rgba(255,255,255,0.2);
 }
 
-/* 자물쇠 영역 - 매우 기본적이고 깔끔하게 */
+/* 자물쇠 영역 - 계산기/도어락 스타일 */
 .lock-area {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: clamp(220px, 65vw, 320px);
-    height: clamp(280px, 45vh, 380px);
-    background: #f5f5f5;
-    border-radius: 10px;
+    width: clamp(200px, 60vw, 280px);
+    height: clamp(250px, 40vh, 320px);
+    background: #343a40;
+    border-radius: 12px;
     padding: clamp(15px, 4vw, 25px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    border: 2px solid #ddd;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    border: 3px solid #495057;
+    z-index: 10;
 }
 
 .simple-lock {
@@ -236,31 +234,33 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: clamp(12px, 3vw, 20px);
+    gap: clamp(15px, 4vw, 25px);
 }
 
 .lock-display {
-    background: #fff;
+    background: #212529;
     border-radius: 8px;
-    padding: clamp(12px, 3vw, 20px);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-    border: 1px solid #ccc;
+    padding: clamp(15px, 4vw, 25px);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);
+    border: 2px solid #495057;
 }
 
 .lock-screen {
-    background: #f8f8f8;
+    background: #000;
     border-radius: 6px;
-    padding: clamp(10px, 2.5vw, 16px);
+    padding: clamp(12px, 3vw, 20px);
     text-align: center;
-    border: 1px solid #ddd;
+    border: 1px solid #495057;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.9);
 }
 
 .lock-display span {
-    font-family: 'Arial', sans-serif;
-    font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
     font-weight: bold;
-    color: #333;
-    letter-spacing: 1px;
+    color: #00ff00;
+    text-shadow: 0 0 8px #00ff00;
+    letter-spacing: 2px;
     display: block;
     position: relative;
 }
@@ -268,7 +268,7 @@ body {
 .lock-display span::after {
     content: '|';
     animation: blink 1s infinite;
-    color: #333;
+    color: #00ff00;
     margin-left: 2px;
 }
 
@@ -279,70 +279,79 @@ body {
 
 .lock-buttons {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(6px, 1.5vw, 10px);
+    grid-template-columns: 1fr;
+    gap: clamp(8px, 2vw, 12px);
     flex: 1;
 }
 
 .button-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: clamp(6px, 1.5vw, 10px);
+    gap: clamp(8px, 2vw, 12px);
 }
 
 .lock-btn {
-    background: #e8e8e8;
-    border: none;
-    border-radius: 6px;
-    color: #333;
-    font-size: clamp(1.2rem, 3.8vw, 1.8rem);
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    color: #495057;
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.15s ease;
-    min-height: clamp(50px, 13vw, 70px);
+    transition: all 0.2s ease;
+    min-height: clamp(55px, 14vw, 75px);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     font-family: 'Arial', sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .lock-btn:hover {
-    background: #d0d0d0;
+    background: #e9ecef;
+    border-color: #adb5bd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .lock-btn:active {
-    background: #c0c0c0;
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    background: #dee2e6;
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .clear-btn {
-    background: #ff6b6b;
+    background: #dc3545;
+    border-color: #c82333;
     color: #fff;
     font-weight: bold;
 }
 
 .clear-btn:hover {
-    background: #ff5252;
+    background: #c82333;
+    border-color: #bd2130;
 }
 
 .clear-btn:active {
-    background: #ff4444;
+    background: #bd2130;
 }
 
 .enter-btn {
-    background: #4CAF50;
+    background: #28a745;
+    border-color: #1e7e34;
     color: #fff;
     font-weight: bold;
 }
 
 .enter-btn:hover {
-    background: #45a049;
+    background: #1e7e34;
+    border-color: #1c7430;
 }
 
 .enter-btn:active {
-    background: #3d8b40;
+    background: #1c7430;
 }
 
 /* 문제보기 버튼 */
@@ -379,7 +388,7 @@ body {
     transform: translateY(-1px);
 }
 
-/* 모달 */
+/* 모달 기본 스타일 */
 .modal {
     display: none;
     position: fixed;
@@ -399,7 +408,7 @@ body {
     border-radius: 0;
     width: 100%;
     height: 100%;
-    overflow-y: auto;
+    overflow: hidden;
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     position: relative;
     display: flex;
@@ -473,7 +482,7 @@ body {
 .problem-image {
     margin: 0;
     text-align: center;
-    overflow: hidden;
+    overflow: auto;
     border-radius: clamp(8px, 2vw, 15px);
     background: rgba(0,0,0,0.1);
     padding: clamp(5px, 1.5vw, 10px);
@@ -731,36 +740,82 @@ body {
     }
 }
 
+/* 로고 */
+.logo-container {
+    position: fixed;
+    bottom: clamp(20px, 5vw, 40px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    text-align: center;
+}
+
+.logo-image {
+    max-width: clamp(120px, 25vw, 200px);
+    height: auto;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+.logo-image:hover {
+    opacity: 1;
+}
+
 /* 태블릿 최적화 */
 @media (min-width: 768px) and (max-width: 1024px) {
     .treasure-box {
-        width: clamp(400px, 70vw, 500px);
-        height: clamp(500px, 65vh, 600px);
+        width: clamp(350px, 60vw, 450px);
+        height: clamp(400px, 55vh, 550px);
     }
     
     .lock-area {
-        width: clamp(280px, 50vw, 350px);
-        height: clamp(320px, 45vh, 400px);
-        border-radius: 30px;
+        width: clamp(280px, 45vw, 320px);
+        height: clamp(300px, 40vh, 360px);
+        border-radius: 15px;
         padding: clamp(20px, 4vw, 30px);
     }
     
     .lock-btn {
-        min-height: clamp(55px, 8vw, 75px);
-        font-size: clamp(1.3rem, 2.5vw, 1.7rem);
-        border-radius: 15px;
+        min-height: clamp(60px, 8vw, 80px);
+        font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+        border-radius: 10px;
     }
     
     .lock-display span {
-        font-size: clamp(1.6rem, 4vw, 2.4rem);
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
     }
     
     .game-title h1 {
-        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-size: clamp(2rem, 4vw, 3rem);
     }
     
     .game-title p {
-        font-size: clamp(1rem, 2.5vw, 1.4rem);
+        font-size: clamp(1rem, 2.5vw, 1.3rem);
+    }
+    
+    .logo-image {
+        max-width: clamp(150px, 20vw, 250px);
+    }
+    
+    /* 태블릿 모달 최적화 */
+    #problem-modal .modal-content {
+        width: 100%;
+        height: 100%;
+        padding: clamp(15px, 3vw, 25px);
+    }
+    
+    #problem-modal .problem-image {
+        width: 100%;
+        height: 100%;
+        max-height: calc(100vh - 100px);
+    }
+    
+    #problem-modal .problem-image img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
     }
 }
 
@@ -772,104 +827,194 @@ body {
     
     .game-title {
         margin-bottom: 0.5rem;
+        padding: clamp(10px, 3vw, 15px);
     }
     
     .game-title h1 {
-        font-size: clamp(1.2rem, 5vw, 2rem);
-        margin-bottom: 0.3rem;
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
     }
     
     .game-title p {
-        font-size: clamp(0.7rem, 2.5vw, 1rem);
-        margin-bottom: 0.2rem;
+        font-size: clamp(0.7rem, 3vw, 1rem);
     }
     
     .treasure-box {
-        width: clamp(250px, 90vw, 320px);
-        height: clamp(300px, 50vh, 400px);
-        margin: 0.5rem auto;
+        width: clamp(280px, 85vw, 350px);
+        height: clamp(350px, 60vh, 450px);
     }
     
     .lock-area {
-        width: clamp(200px, 75vw, 270px);
-        height: clamp(240px, 40vh, 300px);
-        padding: clamp(12px, 3vw, 18px);
-        border-radius: 20px;
+        width: clamp(220px, 70vw, 280px);
+        height: clamp(280px, 50vh, 350px);
+        border-radius: 12px;
+        padding: clamp(15px, 4vw, 20px);
     }
     
     .lock-btn {
-        min-height: clamp(40px, 13vw, 55px);
-        font-size: clamp(1rem, 4.5vw, 1.4rem);
-        border-radius: 10px;
+        min-height: clamp(45px, 12vw, 60px);
+        font-size: clamp(1.1rem, 4vw, 1.4rem);
     }
     
     .lock-display span {
-        font-size: clamp(1.2rem, 5.5vw, 1.6rem);
+        font-size: clamp(1.4rem, 5vw, 2rem);
     }
     
     .modal-content {
-        margin: 10px;
-        padding: 15px;
-        width: calc(100% - 20px);
-        max-height: calc(100vh - 20px);
+        width: 100%;
+        height: 100%;
+        padding: clamp(10px, 3vw, 20px);
     }
     
     .problem-btn {
-        padding: 8px 15px;
-        font-size: 0.8rem;
+        font-size: clamp(0.8rem, 3vw, 1rem);
+        padding: clamp(8px, 2vw, 12px);
     }
     
     .game-status {
-        padding: 6px 10px;
-        font-size: 0.7rem;
+        font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+    }
+    
+    .logo-container {
+        bottom: clamp(15px, 4vw, 30px);
+    }
+    
+    .logo-image {
+        max-width: clamp(100px, 30vw, 150px);
+    }
+    
+    /* 모바일 모달 최적화 */
+    #problem-modal .modal-content {
+        width: 100%;
+        height: 100%;
+        padding: clamp(10px, 2vw, 15px);
+    }
+    
+    #problem-modal .modal-header {
+        margin-bottom: clamp(10px, 2vw, 15px);
+        padding-bottom: clamp(8px, 1.5vw, 12px);
+    }
+    
+    #problem-modal .modal-header h2 {
+        font-size: clamp(1rem, 4vw, 1.3rem);
+    }
+    
+    #problem-modal .close-btn {
+        font-size: clamp(1.2rem, 5vw, 1.5rem);
+        padding: clamp(3px, 1vw, 8px);
+    }
+    
+    #problem-modal .problem-image {
+        width: 100%;
+        height: 100%;
+        max-height: calc(100vh - 80px);
+        padding: clamp(5px, 1vw, 10px);
+    }
+    
+    #problem-modal .problem-image img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        border-radius: clamp(8px, 2vw, 12px);
     }
 }
 
 /* 세로 모드 모바일 */
 @media (max-width: 767px) and (orientation: portrait) {
     .treasure-box {
-        height: clamp(250px, 40vh, 350px);
+        width: clamp(250px, 80vw, 320px);
+        height: clamp(300px, 55vh, 400px);
     }
     
     .lock-area {
-        height: clamp(200px, 35vh, 260px);
+        width: clamp(200px, 65vw, 250px);
+        height: clamp(240px, 45vh, 320px);
     }
     
     .game-title {
-        margin-bottom: 0.3rem;
+        max-width: 95vw;
     }
     
     .game-title h1 {
-        font-size: clamp(1rem, 4vw, 1.8rem);
+        font-size: clamp(1rem, 4.5vw, 1.5rem);
     }
     
     .game-title p {
-        font-size: clamp(0.6rem, 2vw, 0.9rem);
+        font-size: clamp(0.6rem, 2.8vw, 0.9rem);
+    }
+    
+    .logo-container {
+        bottom: clamp(10px, 3vw, 25px);
+    }
+    
+    .logo-image {
+        max-width: clamp(80px, 25vw, 120px);
+    }
+    
+    /* 세로 모드 모달 최적화 */
+    #problem-modal .problem-image {
+        max-height: calc(100vh - 70px);
     }
 }
 
 /* 가로 모드 모바일 */
 @media (max-width: 767px) and (orientation: landscape) {
     .treasure-box {
-        width: clamp(200px, 60vw, 280px);
-        height: clamp(200px, 45vh, 280px);
+        width: clamp(200px, 40vw, 280px);
+        height: clamp(250px, 70vh, 350px);
     }
     
     .lock-area {
-        width: clamp(160px, 55vw, 220px);
-        height: clamp(160px, 40vh, 220px);
+        width: clamp(160px, 35vw, 220px);
+        height: clamp(200px, 55vh, 280px);
     }
     
     .game-title {
-        margin-bottom: 0.2rem;
+        max-width: 90vw;
     }
     
     .game-title h1 {
-        font-size: clamp(0.8rem, 3vw, 1.2rem);
+        font-size: clamp(0.8rem, 3.5vw, 1.2rem);
     }
     
     .game-title p {
-        font-size: clamp(0.5rem, 1.8vw, 0.7rem);
+        font-size: clamp(0.5rem, 2.2vw, 0.7rem);
+    }
+    
+    .logo-container {
+        bottom: clamp(8px, 2vw, 20px);
+    }
+    
+    .logo-image {
+        max-width: clamp(60px, 20vw, 100px);
+    }
+    
+    /* 가로 모드 모달 최적화 */
+    #problem-modal .modal-content {
+        padding: clamp(8px, 1.5vw, 12px);
+    }
+    
+    #problem-modal .modal-header {
+        margin-bottom: clamp(8px, 1.5vw, 12px);
+        padding-bottom: clamp(5px, 1vw, 8px);
+    }
+    
+    #problem-modal .modal-header h2 {
+        font-size: clamp(0.8rem, 3vw, 1.1rem);
+    }
+    
+    #problem-modal .close-btn {
+        font-size: clamp(1rem, 4vw, 1.3rem);
+        padding: clamp(2px, 0.8vw, 6px);
+    }
+    
+    #problem-modal .problem-image {
+        max-height: calc(100vh - 60px);
+        padding: clamp(3px, 0.8vw, 8px);
+    }
+    
+    #problem-modal .problem-image img {
+        border-radius: clamp(6px, 1.5vw, 10px);
     }
 }
 
