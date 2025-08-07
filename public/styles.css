@@ -615,10 +615,12 @@ body {
 #problem-modal .problem-image img:hover {
     transform: scale(1.02);
     box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    cursor: zoom-in;
 }
 
 #problem-modal .problem-image img:active {
     transform: scale(0.98);
+    cursor: zoom-in;
 }
 
 /* 전체 화면 모드에서의 이미지 스타일 */

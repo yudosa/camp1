@@ -678,20 +678,17 @@ class EscapeRoomGame {
             });
         }
 
-        // PC에서 마우스 오버 효과
-        if (!this.isMobile) {
-            problemImage.addEventListener('mouseenter', () => {
-                if (!isFullscreen) {
-                    problemImage.style.cursor = 'zoom-in';
-                }
-            });
-
-            problemImage.addEventListener('mouseleave', () => {
-                if (!isFullscreen) {
-                    problemImage.style.cursor = 'zoom-in';
-                }
-            });
+        // 모든 기기에서 돋보기 커서 설정
+        if (!isFullscreen) {
+            problemImage.style.cursor = 'zoom-in';
         }
+
+        // 터치 이벤트로도 커서 설정
+        problemImage.addEventListener('touchstart', () => {
+            if (!isFullscreen) {
+                problemImage.style.cursor = 'zoom-in';
+            }
+        }, { passive: true });
     }
 
     initializeImageSize(image) {
