@@ -4,7 +4,6 @@ class EscapeRoomGame {
         this.socket = io();
         this.currentCode = '';
         this.correctCode = '4152314'; // 7자리 비밀번호
-        this.attempts = 0;
         this.startTime = Date.now();
         this.gameCompleted = false;
         this.timerInterval = null;
@@ -45,7 +44,6 @@ class EscapeRoomGame {
 
     initializeElements() {
         this.lockDisplay = document.getElementById('lock-code');
-        this.attemptsDisplay = document.getElementById('attempts');
         this.timerDisplay = document.getElementById('timer');
         this.treasureBox = document.getElementById('treasure-box');
         this.boxLid = document.querySelector('.box-lid');
@@ -53,7 +51,6 @@ class EscapeRoomGame {
         this.problemModal = document.getElementById('problem-modal');
         this.successModal = document.getElementById('success-modal');
         this.explosion = document.getElementById('explosion');
-        this.resetBtn = document.getElementById('reset-btn');
     }
 
     initializeSocket() {
@@ -107,17 +104,6 @@ class EscapeRoomGame {
         this.problemBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
             this.showProblemModal();
-        }, { passive: false });
-
-        // 리셋 버튼
-        this.resetBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.resetGame();
-        });
-        
-        this.resetBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            this.resetGame();
         }, { passive: false });
 
         // 모달 닫기 버튼
@@ -215,9 +201,6 @@ class EscapeRoomGame {
     submitCode() {
         if (this.currentCode.length !== 7) return;
 
-        this.attempts++;
-        this.attemptsDisplay.textContent = this.attempts;
-
         if (this.currentCode === this.correctCode) {
             this.handleSuccess();
         } else {
@@ -236,13 +219,12 @@ class EscapeRoomGame {
         this.socket.emit('end-game', {
             roomId: 'main-room',
             success: true,
-            attempts: this.attempts,
             time: this.getElapsedTime()
         });
 
         // 성공 애니메이션
         this.treasureBox.classList.add('success');
-        this.boxLid.style.transform = 'rotateX(-90deg)';
+        this.boxLid.style.transform = 'rotateX(-95deg)';
         
         // 폭발 효과
         setTimeout(() => {
@@ -257,7 +239,6 @@ class EscapeRoomGame {
         // 로컬 스토리지에 성공 기록
         localStorage.setItem('escapeRoomCompleted', 'true');
         localStorage.setItem('escapeRoomTime', this.getElapsedTime().toString());
-        localStorage.setItem('escapeRoomAttempts', this.attempts.toString());
     }
 
     handleFailure() {
@@ -291,6 +272,78 @@ class EscapeRoomGame {
         if (this.isMobile) {
             document.body.style.overflow = 'hidden';
         }
+        
+        // 이미지 줌 기능 초기화
+        this.initializeImageZoom();
+    }
+
+    initializeImageZoom() {
+        const problemImage = document.querySelector('#problem-modal .problem-image img');
+        if (!problemImage) return;
+
+        let currentScale = 1;
+        let initialDistance = 0;
+        let initialScale = 1;
+
+        // 터치 이벤트 (핀치 줌)
+        problemImage.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                initialDistance = this.getDistance(e.touches[0], e.touches[1]);
+                initialScale = currentScale;
+            }
+        }, { passive: false });
+
+        problemImage.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const currentDistance = this.getDistance(e.touches[0], e.touches[1]);
+                const scale = (currentDistance / initialDistance) * initialScale;
+                currentScale = Math.min(Math.max(scale, 0.5), 3); // 0.5배 ~ 3배 제한
+                this.applyZoom(problemImage, currentScale);
+            }
+        }, { passive: false });
+
+        // 더블 탭으로 리셋
+        let lastTap = 0;
+        problemImage.addEventListener('touchend', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 500 && tapLength > 0) {
+                // 더블 탭
+                currentScale = 1;
+                this.applyZoom(problemImage, currentScale);
+                e.preventDefault();
+            }
+            lastTap = currentTime;
+        });
+
+        // 마우스 휠 줌 (데스크톱)
+        problemImage.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+            currentScale = Math.min(Math.max(currentScale * delta, 0.5), 3);
+            this.applyZoom(problemImage, currentScale);
+        }, { passive: false });
+
+        // 더블 클릭으로 리셋 (데스크톱)
+        problemImage.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            currentScale = 1;
+            this.applyZoom(problemImage, currentScale);
+        });
+    }
+
+    getDistance(touch1, touch2) {
+        const dx = touch1.clientX - touch2.clientX;
+        const dy = touch1.clientY - touch2.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    applyZoom(image, scale) {
+        image.style.transform = `scale(${scale})`;
+        image.style.transformOrigin = 'center center';
+        image.style.transition = 'transform 0.1s ease-out';
     }
 
     showSuccessModal() {
@@ -307,6 +360,14 @@ class EscapeRoomGame {
             // 모바일에서 스크롤 복원
             if (this.isMobile) {
                 document.body.style.overflow = 'auto';
+            }
+            
+            // 문제 모달이 닫힐 때 이미지 줌 리셋
+            if (modal === this.problemModal) {
+                const problemImage = document.querySelector('#problem-modal .problem-image img');
+                if (problemImage) {
+                    problemImage.style.transform = 'scale(1)';
+                }
             }
         }
     }
@@ -350,12 +411,10 @@ class EscapeRoomGame {
     resetGame() {
         this.currentCode = '';
         this.correctCode = '4152314';
-        this.attempts = 0;
         this.startTime = Date.now();
         this.gameCompleted = false;
         
         this.updateDisplay();
-        this.attemptsDisplay.textContent = '0';
         this.timerDisplay.textContent = '00:00';
         
         this.treasureBox.classList.remove('success');
@@ -366,7 +425,6 @@ class EscapeRoomGame {
         // 로컬 스토리지에서 성공 기록 제거
         localStorage.removeItem('escapeRoomCompleted');
         localStorage.removeItem('escapeRoomTime');
-        localStorage.removeItem('escapeRoomAttempts');
     }
 
     updateLayout() {
@@ -407,8 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const completed = localStorage.getItem('escapeRoomCompleted');
     if (completed === 'true') {
         const time = localStorage.getItem('escapeRoomTime');
-        const attempts = localStorage.getItem('escapeRoomAttempts');
-        console.log(`이전 기록: ${time}초, ${attempts}번 시도`);
+        console.log(`이전 기록: ${time}초`);
     }
 });
 
