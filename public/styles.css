@@ -215,7 +215,7 @@ body {
         0 2px 4px rgba(255,255,255,0.2);
 }
 
-/* 자물쇠 영역 */
+/* 자물쇠 영역 - 기본적이고 깔끔하게 */
 .lock-area {
     position: absolute;
     top: 50%;
@@ -223,14 +223,11 @@ body {
     transform: translate(-50%, -50%);
     width: clamp(220px, 65vw, 320px);
     height: clamp(280px, 45vh, 380px);
-    background: linear-gradient(145deg, #2c3e50, #34495e);
-    border-radius: 25px;
+    background: #2c3e50;
+    border-radius: 15px;
     padding: clamp(15px, 4vw, 25px);
-    box-shadow: 
-        0 20px 40px rgba(0,0,0,0.4),
-        inset 0 2px 10px rgba(255,255,255,0.1);
-    border: 2px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    border: 1px solid #34495e;
 }
 
 .simple-lock {
@@ -243,41 +240,20 @@ body {
 }
 
 .lock-display {
-    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-    border-radius: 15px;
+    background: #1a1a1a;
+    border-radius: 10px;
     padding: clamp(12px, 3vw, 20px);
-    box-shadow: 
-        inset 0 4px 8px rgba(0,0,0,0.6),
-        0 2px 4px rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.lock-display::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #00ff00, transparent);
-    animation: scan 2s ease-in-out infinite;
-}
-
-@keyframes scan {
-    0%, 100% { transform: translateX(-100%); }
-    50% { transform: translateX(100%); }
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.6);
+    border: 1px solid #333;
 }
 
 .lock-screen {
-    background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
-    border-radius: 12px;
+    background: #0a0a0a;
+    border-radius: 8px;
     padding: clamp(10px, 2.5vw, 16px);
     text-align: center;
-    border: 2px solid #333;
-    position: relative;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+    border: 1px solid #444;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.8);
 }
 
 .lock-display span {
@@ -285,11 +261,8 @@ body {
     font-size: clamp(1.4rem, 4.5vw, 2.2rem);
     font-weight: bold;
     color: #00ff00;
-    text-shadow: 
-        0 0 10px #00ff00,
-        0 0 20px #00ff00,
-        0 0 30px #00ff00;
-    letter-spacing: 3px;
+    text-shadow: 0 0 5px #00ff00;
+    letter-spacing: 2px;
     display: block;
     position: relative;
 }
@@ -320,75 +293,51 @@ body {
 }
 
 .lock-btn {
-    background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
-    border: 2px solid #555;
-    border-radius: 12px;
+    background: #4a4a4a;
+    border: 1px solid #555;
+    border-radius: 8px;
     color: white;
     font-size: clamp(1.1rem, 3.5vw, 1.6rem);
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
     min-height: clamp(45px, 12vw, 65px);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 
-        0 4px 8px rgba(0,0,0,0.3),
-        inset 0 2px 4px rgba(255,255,255,0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.lock-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.lock-btn:hover::before {
-    left: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .lock-btn:hover {
-    background: linear-gradient(145deg, #5a5a5a, #4a4a4a);
-    transform: translateY(-2px);
-    box-shadow: 
-        0 6px 12px rgba(0,0,0,0.4),
-        inset 0 2px 4px rgba(255,255,255,0.2);
-    border-color: #666;
+    background: #5a5a5a;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.4);
 }
 
 .lock-btn:active {
     transform: translateY(0);
-    box-shadow: 
-        0 2px 4px rgba(0,0,0,0.3),
-        inset 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 .clear-btn {
-    background: linear-gradient(145deg, #e74c3c, #c0392b);
-    border-color: #a93226;
+    background: #e74c3c;
+    border-color: #c0392b;
     color: #fff;
 }
 
 .clear-btn:hover {
-    background: linear-gradient(145deg, #f39c12, #e67e22);
+    background: #f39c12;
     border-color: #d35400;
 }
 
 .enter-btn {
-    background: linear-gradient(145deg, #27ae60, #2ecc71);
+    background: #27ae60;
     border-color: #229954;
     color: #fff;
 }
 
 .enter-btn:hover {
-    background: linear-gradient(145deg, #2ecc71, #27ae60);
+    background: #2ecc71;
     border-color: #1e8449;
 }
 
@@ -441,19 +390,25 @@ body {
 
 .modal-content {
     background: linear-gradient(135deg, #667eea, #764ba2);
-    margin: clamp(10px, 5vh, 50px) auto;
+    margin: 0;
     padding: clamp(15px, 4vw, 30px);
-    border-radius: clamp(15px, 4vw, 25px);
-    width: clamp(280px, 90vw, 600px);
-    max-height: clamp(400px, 80vh, 700px);
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
     overflow-y: auto;
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 #problem-modal .modal-content {
-    max-width: clamp(300px, 95vw, 800px);
-    width: clamp(280px, 90vw, 600px);
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    margin: 0;
+    padding: clamp(20px, 5vw, 40px);
 }
 
 .modal-header {
@@ -463,6 +418,7 @@ body {
     margin-bottom: clamp(15px, 4vw, 25px);
     padding-bottom: clamp(10px, 2vw, 15px);
     border-bottom: 2px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
 }
 
 .modal-header h2 {
@@ -492,24 +448,36 @@ body {
     color: white;
     line-height: 1.6;
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #problem-modal .modal-body {
     text-align: center;
-    padding: clamp(10px, 3vw, 20px);
+    padding: 0;
+    justify-content: center;
+    align-items: center;
 }
 
 .problem-image {
-    margin: clamp(10px, 3vw, 20px) 0;
+    margin: 0;
     text-align: center;
     overflow: hidden;
     border-radius: clamp(8px, 2vw, 15px);
     background: rgba(0,0,0,0.1);
     padding: clamp(5px, 1.5vw, 10px);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .problem-image img {
     max-width: 100%;
+    max-height: 100%;
+    width: auto;
     height: auto;
     border-radius: clamp(8px, 2vw, 15px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
@@ -517,6 +485,7 @@ body {
     user-select: none;
     -webkit-user-drag: none;
     transition: transform 0.1s ease-out;
+    object-fit: contain;
 }
 
 .problem-image img:hover {
@@ -528,13 +497,16 @@ body {
 }
 
 #problem-modal .problem-image {
-    margin: clamp(15px, 4vw, 25px) 0;
+    margin: 0;
     position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: calc(100vh - 120px);
 }
 
 #problem-modal .problem-image img {
     max-width: 100%;
-    max-height: clamp(200px, 50vh, 400px);
+    max-height: 100%;
     width: auto;
     height: auto;
     border-radius: clamp(10px, 3vw, 20px);
@@ -544,6 +516,7 @@ body {
     -webkit-user-drag: none;
     transition: transform 0.1s ease-out;
     transform-origin: center center;
+    object-fit: contain;
 }
 
 /* 줌 힌트 */
