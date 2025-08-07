@@ -433,6 +433,8 @@ class EscapeRoomGame {
 
         // 전체 화면 모드 토글 함수
         const toggleFullscreen = () => {
+            console.log('Toggle fullscreen called, current state:', isFullscreen);
+            
             if (isFullscreen) {
                 // 전체 화면 해제
                 problemImage.style.position = 'relative';
@@ -710,20 +712,31 @@ class EscapeRoomGame {
     }
 
     closeModal(modal) {
-        if (modal) {
-            modal.style.display = 'none';
-            // 모바일에서 스크롤 복원
-            if (this.isMobile) {
-                document.body.style.overflow = 'auto';
+        if (modal === this.successModal) {
+            // 성공 모달을 닫을 때 축하 노래도 멈춤
+            this.stopCelebrationSound();
+        }
+        
+        modal.style.display = 'none';
+        if (this.isMobile) {
+            document.body.style.overflow = 'auto';
+        }
+        
+        // 문제 모달이 닫힐 때 이미지 줌 리셋
+        if (modal === this.problemModal) {
+            const problemImage = document.querySelector('#problem-modal .problem-image img');
+            if (problemImage) {
+                problemImage.style.transform = 'scale(1)';
             }
-            
-            // 문제 모달이 닫힐 때 이미지 줌 리셋
-            if (modal === this.problemModal) {
-                const problemImage = document.querySelector('#problem-modal .problem-image img');
-                if (problemImage) {
-                    problemImage.style.transform = 'scale(1)';
-                }
-            }
+        }
+    }
+
+    stopCelebrationSound() {
+        const audio = document.getElementById('celebration-audio');
+        if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+            console.log('축하 노래 중지');
         }
     }
 

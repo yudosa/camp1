@@ -243,7 +243,7 @@ body {
 /* 자물쇠 영역 */
 .lock-area {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: clamp(220px, 45vw, 320px);
@@ -641,6 +641,54 @@ body {
     transition: none !important;
 }
 
+/* 모바일에서 전체 화면 강화 */
+@media (max-width: 767px) {
+    #problem-modal .problem-image img.fullscreen {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: none !important;
+        max-height: none !important;
+        object-fit: contain !important;
+        z-index: 9999 !important;
+        cursor: zoom-out !important;
+        background-color: rgba(0,0,0,0.95) !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        transition: none !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+    }
+}
+
+/* 태블릿에서 전체 화면 강화 */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #problem-modal .problem-image img.fullscreen {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: none !important;
+        max-height: none !important;
+        object-fit: contain !important;
+        z-index: 9999 !important;
+        cursor: zoom-out !important;
+        background-color: rgba(0,0,0,0.95) !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        transition: none !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+    }
+}
+
 /* 줌 힌트 */
 .problem-image::after {
     content: '핀치로 확대/축소 가능';
@@ -688,8 +736,11 @@ body {
     width: 90%;
     max-height: 300px;
     height: auto;
-    margin: auto;
-    position: relative;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     overflow: hidden;
 }
 
@@ -711,6 +762,18 @@ body {
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
     margin-bottom: clamp(15px, 3vw, 20px);
     line-height: 1.4;
+}
+
+.mission-next {
+    color: #fff !important;
+    font-weight: bold !important;
+    font-size: clamp(1rem, 2.8vw, 1.2rem) !important;
+    margin-bottom: clamp(20px, 4vw, 25px) !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+    background: rgba(255,255,255,0.1) !important;
+    padding: clamp(8px, 2vw, 12px) !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
 }
 
 .success-actions {
@@ -872,8 +935,11 @@ body {
     width: 90%;
     max-height: 300px;
     height: auto;
-    margin: auto;
-    position: relative;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     overflow: hidden;
 }
 
@@ -1076,35 +1142,38 @@ body {
     }
     
     .lock-area {
-        width: clamp(270px, 55vw, 400px);
-        height: clamp(340px, 50vh, 450px);
+        width: clamp(200px, 40vw, 280px);
+        height: clamp(250px, 35vh, 320px);
         border-radius: 18px;
-        padding: clamp(25px, 5vw, 32px);
+        padding: clamp(20px, 4vw, 25px);
         z-index: 15;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     
     .lock-display {
         height: 25%;
-        padding: clamp(12px, 2.5vw, 18px);
+        padding: clamp(10px, 2vw, 15px);
     }
     
     .lock-display span {
-        font-size: clamp(1.5rem, 4.5vw, 2rem);
+        font-size: clamp(1.2rem, 3.5vw, 1.6rem);
     }
     
     .lock-buttons {
         height: 75%;
-        gap: clamp(10px, 2.5vw, 15px);
+        gap: clamp(8px, 2vw, 12px);
     }
     
     .button-row {
-        gap: clamp(10px, 2.5vw, 15px);
+        gap: clamp(8px, 2vw, 12px);
     }
     
     .lock-btn {
-        min-height: clamp(55px, 13vw, 70px);
-        font-size: clamp(1.3rem, 4vw, 1.7rem);
-        border-radius: 15px;
+        min-height: clamp(40px, 10vw, 55px);
+        font-size: clamp(1rem, 3vw, 1.4rem);
+        border-radius: 12px;
     }
     
     .game-title h1 {
@@ -1178,34 +1247,37 @@ body {
     }
     
     .lock-area {
-        width: clamp(200px, 70vw, 280px);
-        height: clamp(250px, 50vh, 320px);
+        width: clamp(160px, 55vw, 220px);
+        height: clamp(200px, 40vh, 260px);
         border-radius: 15px;
-        padding: clamp(18px, 4vw, 22px);
+        padding: clamp(15px, 3.5vw, 20px);
         z-index: 15;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     
     .lock-display {
         height: 25%;
-        padding: clamp(8px, 2vw, 12px);
+        padding: clamp(6px, 1.5vw, 10px);
     }
     
     .lock-display span {
-        font-size: clamp(1.2rem, 4vw, 1.6rem);
+        font-size: clamp(1rem, 3.5vw, 1.4rem);
     }
     
     .lock-buttons {
         height: 75%;
-        gap: clamp(6px, 1.5vw, 10px);
+        gap: clamp(5px, 1.2vw, 8px);
     }
     
     .button-row {
-        gap: clamp(6px, 1.5vw, 10px);
+        gap: clamp(5px, 1.2vw, 8px);
     }
     
     .lock-btn {
-        min-height: clamp(40px, 10vw, 55px);
-        font-size: clamp(1rem, 3.5vw, 1.4rem);
+        min-height: clamp(35px, 9vw, 50px);
+        font-size: clamp(0.9rem, 3vw, 1.3rem);
     }
     
     .modal-content {
@@ -1310,32 +1382,35 @@ body {
     }
     
     .lock-area {
-        width: clamp(180px, 65vw, 240px);
-        height: clamp(220px, 45vh, 280px);
+        width: clamp(140px, 50vw, 200px);
+        height: clamp(180px, 35vh, 240px);
         z-index: 15;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     
     .lock-display {
         height: 25%;
-        padding: clamp(6px, 1.5vw, 10px);
+        padding: clamp(5px, 1.2vw, 8px);
     }
     
     .lock-display span {
-        font-size: clamp(1rem, 3.5vw, 1.4rem);
+        font-size: clamp(0.9rem, 3vw, 1.3rem);
     }
     
     .lock-buttons {
         height: 75%;
-        gap: clamp(4px, 1vw, 8px);
+        gap: clamp(3px, 0.8vw, 6px);
     }
     
     .button-row {
-        gap: clamp(4px, 1vw, 8px);
+        gap: clamp(3px, 0.8vw, 6px);
     }
     
     .lock-btn {
-        min-height: clamp(35px, 9vw, 50px);
-        font-size: clamp(0.9rem, 3vw, 1.3rem);
+        min-height: clamp(30px, 8vw, 45px);
+        font-size: clamp(0.8rem, 2.5vw, 1.2rem);
     }
     
     .game-title {
@@ -1373,32 +1448,35 @@ body {
     }
     
     .lock-area {
-        width: clamp(160px, 40vw, 220px);
-        height: clamp(200px, 55vh, 260px);
+        width: clamp(120px, 35vw, 180px);
+        height: clamp(150px, 45vh, 200px);
         z-index: 15;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     
     .lock-display {
         height: 25%;
-        padding: clamp(4px, 1vw, 8px);
+        padding: clamp(3px, 0.8vw, 6px);
     }
     
     .lock-display span {
-        font-size: clamp(0.8rem, 3vw, 1.2rem);
+        font-size: clamp(0.7rem, 2.5vw, 1.1rem);
     }
     
     .lock-buttons {
         height: 75%;
-        gap: clamp(3px, 0.8vw, 6px);
+        gap: clamp(2px, 0.6vw, 5px);
     }
     
     .button-row {
-        gap: clamp(3px, 0.8vw, 6px);
+        gap: clamp(2px, 0.6vw, 5px);
     }
     
     .lock-btn {
-        min-height: clamp(30px, 8vw, 45px);
-        font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+        min-height: clamp(25px, 7vw, 40px);
+        font-size: clamp(0.7rem, 2.2vw, 1rem);
     }
     
     .game-title {
@@ -1489,6 +1567,10 @@ body {
         max-width: 320px;
         max-height: 250px;
         width: 85%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     
     .failure-message {
@@ -1509,6 +1591,45 @@ body {
         padding: clamp(6px, 1.5vw, 10px) clamp(16px, 3.5vw, 24px);
         font-size: clamp(0.8rem, 2.2vw, 1rem);
     }
+    
+    .mission-text {
+        bottom: clamp(60px, 12vw, 100px);
+        padding: clamp(6px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px);
+    }
+    
+    .mission-text p {
+        font-size: clamp(0.7rem, 2.2vw, 0.9rem);
+    }
+    
+    /* 모바일에서 성공 모달 크기 조정 */
+    .success-content {
+        max-width: 320px;
+        max-height: 250px;
+        width: 85%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .success-message {
+        padding: clamp(15px, 3vw, 20px);
+    }
+    
+    .success-message h3 {
+        font-size: clamp(1rem, 3vw, 1.3rem);
+        margin-bottom: clamp(8px, 1.5vw, 12px);
+    }
+    
+    .success-message p {
+        font-size: clamp(0.8rem, 2.2vw, 1rem);
+        margin-bottom: clamp(12px, 2.5vw, 16px);
+    }
+    
+    .success-btn {
+        padding: clamp(6px, 1.5vw, 10px) clamp(16px, 3.5vw, 24px);
+        font-size: clamp(0.8rem, 2.2vw, 1rem);
+    }
 }
 
 /* 태블릿에서 실패 모달 크기 조정 */
@@ -1517,6 +1638,10 @@ body {
         max-width: 350px;
         max-height: 280px;
         width: 80%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     
     .failure-message {
@@ -1534,6 +1659,45 @@ body {
     }
     
     .retry-btn {
+        padding: clamp(7px, 1.8vw, 11px) clamp(18px, 3.8vw, 26px);
+        font-size: clamp(0.85rem, 2.3vw, 1.05rem);
+    }
+    
+    .mission-text {
+        bottom: clamp(70px, 13vw, 110px);
+        padding: clamp(7px, 1.8vw, 11px) clamp(14px, 2.8vw, 18px);
+    }
+    
+    .mission-text p {
+        font-size: clamp(0.75rem, 2.3vw, 1rem);
+    }
+    
+    /* 태블릿에서 성공 모달 크기 조정 */
+    .success-content {
+        max-width: 350px;
+        max-height: 280px;
+        width: 80%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .success-message {
+        padding: clamp(18px, 3.5vw, 25px);
+    }
+    
+    .success-message h3 {
+        font-size: clamp(1.1rem, 3.2vw, 1.4rem);
+        margin-bottom: clamp(12px, 2.2vw, 14px);
+    }
+    
+    .success-message p {
+        font-size: clamp(0.85rem, 2.3vw, 1.05rem);
+        margin-bottom: clamp(14px, 2.8vw, 18px);
+    }
+    
+    .success-btn {
         padding: clamp(7px, 1.8vw, 11px) clamp(18px, 3.8vw, 26px);
         font-size: clamp(0.85rem, 2.3vw, 1.05rem);
     }
@@ -1574,4 +1738,123 @@ body {
     .lock-btn, .problem-btn, .reset-btn {
         border-width: 0.5px;
     }
+}
+
+/* 폭죽 효과 */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
+    border-radius: 2px;
+    animation: confetti-fall 3s linear infinite;
+    opacity: 0;
+}
+
+.confetti:nth-child(1) { left: 10%; animation-delay: 0s; }
+.confetti:nth-child(2) { left: 20%; animation-delay: 0.2s; }
+.confetti:nth-child(3) { left: 30%; animation-delay: 0.4s; }
+.confetti:nth-child(4) { left: 40%; animation-delay: 0.6s; }
+.confetti:nth-child(5) { left: 50%; animation-delay: 0.8s; }
+.confetti:nth-child(6) { left: 60%; animation-delay: 1s; }
+.confetti:nth-child(7) { left: 70%; animation-delay: 1.2s; }
+.confetti:nth-child(8) { left: 80%; animation-delay: 1.4s; }
+.confetti:nth-child(9) { left: 90%; animation-delay: 1.6s; }
+.confetti:nth-child(10) { left: 15%; animation-delay: 1.8s; }
+.confetti:nth-child(11) { left: 25%; animation-delay: 2s; }
+.confetti:nth-child(12) { left: 35%; animation-delay: 2.2s; }
+.confetti:nth-child(13) { left: 45%; animation-delay: 2.4s; }
+.confetti:nth-child(14) { left: 55%; animation-delay: 2.6s; }
+.confetti:nth-child(15) { left: 65%; animation-delay: 2.8s; }
+.confetti:nth-child(16) { left: 75%; animation-delay: 3s; }
+.confetti:nth-child(17) { left: 85%; animation-delay: 3.2s; }
+.confetti:nth-child(18) { left: 95%; animation-delay: 3.4s; }
+.confetti:nth-child(19) { left: 5%; animation-delay: 3.6s; }
+.confetti:nth-child(20) { left: 85%; animation-delay: 3.8s; }
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* 꽃가루 효과 */
+.sparkle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    animation: sparkle-float 4s ease-in-out infinite;
+    opacity: 0;
+    box-shadow: 0 0 6px #fff, 0 0 12px #fff;
+}
+
+.sparkle:nth-child(1) { left: 20%; top: 30%; animation-delay: 0s; }
+.sparkle:nth-child(2) { left: 80%; top: 20%; animation-delay: 0.5s; }
+.sparkle:nth-child(3) { left: 40%; top: 60%; animation-delay: 1s; }
+.sparkle:nth-child(4) { left: 60%; top: 40%; animation-delay: 1.5s; }
+.sparkle:nth-child(5) { left: 10%; top: 50%; animation-delay: 2s; }
+.sparkle:nth-child(6) { left: 90%; top: 30%; animation-delay: 2.5s; }
+.sparkle:nth-child(7) { left: 30%; top: 80%; animation-delay: 3s; }
+.sparkle:nth-child(8) { left: 70%; top: 70%; animation-delay: 3.5s; }
+.sparkle:nth-child(9) { left: 50%; top: 10%; animation-delay: 4s; }
+.sparkle:nth-child(10) { left: 25%; top: 40%; animation-delay: 4.5s; }
+.sparkle:nth-child(11) { left: 75%; top: 60%; animation-delay: 5s; }
+.sparkle:nth-child(12) { left: 15%; top: 70%; animation-delay: 5.5s; }
+.sparkle:nth-child(13) { left: 85%; top: 50%; animation-delay: 6s; }
+.sparkle:nth-child(14) { left: 45%; top: 20%; animation-delay: 6.5s; }
+.sparkle:nth-child(15) { left: 55%; top: 80%; animation-delay: 7s; }
+
+@keyframes sparkle-float {
+    0% {
+        transform: translateY(0px) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(-20px) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-40px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* 성공 모달이 표시될 때만 효과 활성화 */
+#success-modal:not([style*="display: none"]) .confetti,
+#success-modal:not([style*="display: none"]) .sparkle {
+    animation-play-state: running;
+}
+
+#success-modal[style*="display: none"] .confetti,
+#success-modal[style*="display: none"] .sparkle {
+    animation-play-state: paused;
 }
