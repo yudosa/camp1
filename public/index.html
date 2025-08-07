@@ -2,8 +2,17 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>대강당을 탈출하자!!</title>
+    
+    <!-- 모바일 최적화 메타 태그 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="방탈출게임">
+    <meta name="theme-color" content="#764ba2">
+    <meta name="msapplication-TileColor" content="#764ba2">
+    <meta name="msapplication-TileImage" content="/icon-192.png">
     
     <!-- PWA 메타 태그 -->
     <meta name="description" content="대강당에서 탈출하는 방탈출 게임">
@@ -17,6 +26,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png">
     <link rel="apple-touch-icon" href="/icon-192.png">
     <link rel="manifest" href="/manifest.json">
+    
+    <!-- 터치 최적화 -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
     
     <link rel="stylesheet" href="styles.css">
     <script src="/socket.io/socket.io.js"></script>

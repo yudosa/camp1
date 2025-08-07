@@ -8,11 +8,39 @@ class EscapeRoomGame {
         this.startTime = Date.now();
         this.gameCompleted = false;
         this.timerInterval = null;
+        this.isMobile = this.detectMobile();
         
         this.initializeElements();
         this.initializeSocket();
         this.initializeEventListeners();
         this.startTimer();
+        this.setupMobileOptimizations();
+    }
+
+    detectMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+               (window.innerWidth <= 768);
+    }
+
+    setupMobileOptimizations() {
+        if (this.isMobile) {
+            // 모바일에서 뷰포트 높이 설정
+            const setVH = () => {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            };
+            
+            setVH();
+            window.addEventListener('resize', setVH);
+            window.addEventListener('orientationchange', setVH);
+            
+            // 터치 이벤트 최적화
+            document.addEventListener('touchstart', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
     }
 
     initializeElements() {
@@ -56,28 +84,53 @@ class EscapeRoomGame {
     }
 
     initializeEventListeners() {
-        // 자물쇠 버튼 이벤트
+        // 자물쇠 버튼 이벤트 (터치 최적화)
         document.querySelectorAll('.lock-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                e.preventDefault();
                 this.handleLockButton(e.target);
             });
+            
+            // 터치 이벤트 추가
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.handleLockButton(e.target);
+            }, { passive: false });
         });
 
         // 문제보기 버튼
-        this.problemBtn.addEventListener('click', () => {
+        this.problemBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             this.showProblemModal();
         });
+        
+        this.problemBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.showProblemModal();
+        }, { passive: false });
 
         // 리셋 버튼
-        this.resetBtn.addEventListener('click', () => {
+        this.resetBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             this.resetGame();
         });
+        
+        this.resetBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.resetGame();
+        }, { passive: false });
 
         // 모달 닫기 버튼
         document.querySelectorAll('.close-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                e.preventDefault();
                 this.closeModal(e.target.closest('.modal'));
             });
+            
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.closeModal(e.target.closest('.modal'));
+            }, { passive: false });
         });
 
         // 모달 외부 클릭 시 닫기
@@ -87,17 +140,32 @@ class EscapeRoomGame {
                     this.closeModal(modal);
                 }
             });
+            
+            modal.addEventListener('touchstart', (e) => {
+                if (e.target === modal) {
+                    this.closeModal(modal);
+                }
+            });
         });
 
-        // 키보드 이벤트
-        document.addEventListener('keydown', (e) => {
-            this.handleKeyboardInput(e);
+        // 키보드 이벤트 (데스크톱에서만)
+        if (!this.isMobile) {
+            document.addEventListener('keydown', (e) => {
+                this.handleKeyboardInput(e);
+            });
+        }
+
+        // 화면 방향 변경 감지
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.updateLayout();
+            }, 100);
         });
 
-        // 터치 이벤트 최적화
-        document.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-        }, { passive: false });
+        // 리사이즈 이벤트
+        window.addEventListener('resize', () => {
+            this.updateLayout();
+        });
     }
 
     handleLockButton(button) {
@@ -199,8 +267,10 @@ class EscapeRoomGame {
             this.treasureBox.classList.remove('shake');
         }, 500);
 
-        // 실패 사운드 효과 (선택사항)
-        // this.playFailureSound();
+        // 모바일에서 진동 피드백 (선택사항)
+        if (this.isMobile && navigator.vibrate) {
+            navigator.vibrate(200);
+        }
     }
 
     triggerExplosion() {
@@ -217,15 +287,27 @@ class EscapeRoomGame {
 
     showProblemModal() {
         this.problemModal.style.display = 'block';
+        // 모바일에서 스크롤 방지
+        if (this.isMobile) {
+            document.body.style.overflow = 'hidden';
+        }
     }
 
     showSuccessModal() {
         this.successModal.style.display = 'block';
+        // 모바일에서 스크롤 방지
+        if (this.isMobile) {
+            document.body.style.overflow = 'hidden';
+        }
     }
 
     closeModal(modal) {
         if (modal) {
             modal.style.display = 'none';
+            // 모바일에서 스크롤 복원
+            if (this.isMobile) {
+                document.body.style.overflow = 'auto';
+            }
         }
     }
 
@@ -286,6 +368,27 @@ class EscapeRoomGame {
         localStorage.removeItem('escapeRoomTime');
         localStorage.removeItem('escapeRoomAttempts');
     }
+
+    updateLayout() {
+        // 모바일 최적화
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        
+        // 화면 크기에 따른 추가 최적화
+        if (window.innerWidth <= 480) {
+            // 작은 모바일 화면
+            document.body.classList.add('small-mobile');
+        } else if (window.innerWidth <= 768) {
+            // 일반 모바일 화면
+            document.body.classList.add('mobile');
+        } else if (window.innerWidth <= 1024) {
+            // 태블릿 화면
+            document.body.classList.add('tablet');
+        } else {
+            // 데스크톱 화면
+            document.body.classList.remove('small-mobile', 'mobile', 'tablet');
+        }
+    }
 }
 
 // 게임 초기화
@@ -293,10 +396,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const game = new EscapeRoomGame();
     
     // 윈도우 리사이즈 이벤트
-    window.addEventListener('resize', updateLayout);
+    window.addEventListener('resize', () => {
+        game.updateLayout();
+    });
     
     // 초기 레이아웃 설정
-    updateLayout();
+    game.updateLayout();
     
     // 성공 기록이 있으면 표시
     const completed = localStorage.getItem('escapeRoomCompleted');
