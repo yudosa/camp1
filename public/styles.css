@@ -1185,10 +1185,10 @@ body {
     }
     
     .lock-area {
-        width: clamp(260px, 50vw, 340px); /* Increased */
-        height: clamp(320px, 45vh, 400px); /* Increased */
+        width: clamp(260px, 50vw, 340px); /* Reverted to original width */
+        height: clamp(420px, 55vh, 500px); /* Further increased height */
         border-radius: 18px;
-        padding: clamp(25px, 5vw, 30px); /* Increased */
+        padding: clamp(30px, 6vw, 35px); /* Keep increased padding */
         z-index: 15;
         top: 55%;
         left: 50%;
