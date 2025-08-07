@@ -468,6 +468,7 @@ class EscapeRoomGame {
                     transition: all 0.3s ease !important;
                     transform: none !important;
                     -webkit-transform: none !important;
+                    pointer-events: auto !important;
                 `;
                 problemImage.classList.remove('fullscreen');
                 currentScale = 1;
@@ -519,7 +520,7 @@ class EscapeRoomGame {
             }
         };
 
-        // 클릭 이벤트 (전체 화면 토글) - 모바일 최적화
+        // 클릭 이벤트 (전체 화면 토글) - 모든 기기
         problemImage.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -674,6 +675,21 @@ class EscapeRoomGame {
         } else {
             problemImage.addEventListener('load', () => {
                 this.initializeImageSize(problemImage);
+            });
+        }
+
+        // PC에서 마우스 오버 효과
+        if (!this.isMobile) {
+            problemImage.addEventListener('mouseenter', () => {
+                if (!isFullscreen) {
+                    problemImage.style.cursor = 'zoom-in';
+                }
+            });
+
+            problemImage.addEventListener('mouseleave', () => {
+                if (!isFullscreen) {
+                    problemImage.style.cursor = 'zoom-in';
+                }
             });
         }
     }

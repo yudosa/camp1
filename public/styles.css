@@ -642,6 +642,8 @@ body {
     -webkit-user-select: none !important;
     user-select: none !important;
     pointer-events: auto !important;
+    -webkit-touch-callout: none !important;
+    -webkit-tap-highlight-color: transparent !important;
 }
 
 /* 모바일에서 전체 화면 강화 */
@@ -677,6 +679,7 @@ body {
         -webkit-tap-highlight-color: transparent !important;
         cursor: zoom-in !important;
         z-index: 1 !important;
+        position: relative !important;
     }
 }
 
@@ -709,6 +712,7 @@ body {
         pointer-events: auto !important;
         cursor: zoom-in !important;
         z-index: 1 !important;
+        position: relative !important;
     }
 }
 
@@ -1181,10 +1185,10 @@ body {
     }
     
     .lock-area {
-        width: clamp(220px, 45vw, 320px);
-        height: clamp(280px, 55vh, 380px);
+        width: clamp(260px, 50vw, 340px); /* Increased */
+        height: clamp(320px, 45vh, 400px); /* Increased */
         border-radius: 18px;
-        padding: clamp(20px, 4vw, 25px);
+        padding: clamp(25px, 5vw, 30px); /* Increased */
         z-index: 15;
         top: 55%;
         left: 50%;
@@ -1193,25 +1197,25 @@ body {
     
     .lock-display {
         height: 25%;
-        padding: clamp(10px, 2vw, 15px);
+        padding: clamp(15px, 3vw, 20px); /* Increased */
     }
     
     .lock-display span {
-        font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+        font-size: clamp(1.3rem, 3.5vw, 1.7rem); /* Increased */
     }
     
     .lock-buttons {
         height: 75%;
-        gap: clamp(8px, 2vw, 12px);
+        gap: clamp(12px, 3vw, 18px); /* Increased */
     }
     
     .button-row {
-        gap: clamp(8px, 2vw, 12px);
+        gap: clamp(12px, 3vw, 18px); /* Increased */
     }
     
     .lock-btn {
-        min-height: clamp(40px, 10vw, 55px);
-        font-size: clamp(1rem, 3vw, 1.4rem);
+        min-height: clamp(50px, 12vw, 65px); /* Increased */
+        font-size: clamp(1.2rem, 3.2vw, 1.5rem); /* Increased */
         border-radius: 12px;
     }
     
@@ -1713,9 +1717,9 @@ body {
     
     /* 태블릿에서 성공 모달 크기 조정 */
     .success-content {
-        max-width: 350px;
-        max-height: 280px;
-        width: 80%;
+        max-width: 500px; /* Increased */
+        max-height: 400px; /* Increased */
+        width: 90%; /* Increased */
         position: absolute;
         top: 50%;
         left: 50%;
@@ -1723,22 +1727,29 @@ body {
     }
     
     .success-message {
-        padding: clamp(18px, 3.5vw, 25px);
+        padding: clamp(25px, 5vw, 35px); /* Increased */
     }
     
     .success-message h3 {
-        font-size: clamp(1.1rem, 3.2vw, 1.4rem);
-        margin-bottom: clamp(12px, 2.2vw, 14px);
+        font-size: clamp(1.4rem, 4vw, 1.8rem); /* Increased */
+        margin-bottom: clamp(20px, 4vw, 25px); /* Increased */
     }
     
     .success-message p {
-        font-size: clamp(0.85rem, 2.3vw, 1.05rem);
-        margin-bottom: clamp(14px, 2.8vw, 18px);
+        font-size: clamp(1.1rem, 3vw, 1.4rem); /* Increased */
+        margin-bottom: clamp(20px, 4vw, 25px); /* Increased */
+    }
+    
+    .mission-next {
+        font-size: clamp(1.5rem, 4.5vw, 2rem) !important; /* Added */
+        margin-bottom: clamp(30px, 6vw, 35px) !important; /* Added */
+        padding: clamp(15px, 4vw, 20px) !important; /* Added */
+        line-height: 1.2 !important; /* Added */
     }
     
     .success-btn {
-        padding: clamp(7px, 1.8vw, 11px) clamp(18px, 3.8vw, 26px);
-        font-size: clamp(0.85rem, 2.3vw, 1.05rem);
+        padding: clamp(12px, 3vw, 18px) clamp(30px, 6vw, 40px); /* Increased */
+        font-size: clamp(1.1rem, 3vw, 1.4rem); /* Increased */
     }
 }
 
