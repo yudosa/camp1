@@ -1,21 +1,17 @@
 {
-  "name": "escape-room-game",
-  "type": "static",
+  "name": "escape-room-backend",
+  "type": "nodejs",
   "build": {
-    "command": "",
-    "output": "public"
+    "command": "npm install",
+    "output": ""
   },
   "deploy": {
-    "static": {
-      "root": "public",
-      "cleanUrls": true,
-      "trailingSlash": false
+    "nodejs": {
+      "start": "node server.js"
     }
   },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "3000"
+  }
 }

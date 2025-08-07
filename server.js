@@ -16,8 +16,13 @@ const io = socketIo(server, {
 });
 
 // 미들웨어 설정
-app.use(helmet());
-app.use(cors());
+app.use(helmet({
+  contentSecurityPolicy: false, // 클라우드타입 호환성을 위해 비활성화
+}));
+app.use(cors({
+  origin: "*", // 클라우드타입에서 모든 도메인 허용
+  credentials: true
+}));
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,7 +35,17 @@ app.get('/', (req, res) => {
   res.json({
     message: '방탈출 게임 백엔드 서버',
     status: 'running',
-    version: '1.0.0'
+    version: '1.0.0',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// 헬스체크 엔드포인트
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -141,8 +156,10 @@ app.use((req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0'; // 클라우드타입 호환성을 위해 0.0.0.0 사용
 
-server.listen(PORT, () => {
+server.listen(PORT, HOST, () => {
   console.log(`방탈출 게임 서버가 포트 ${PORT}에서 실행 중입니다.`);
-  console.log(`서버 URL: http://localhost:${PORT}`);
+  console.log(`서버 URL: http://${HOST}:${PORT}`);
+  console.log(`환경: ${process.env.NODE_ENV || 'development'}`);
 });

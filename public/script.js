@@ -1,6 +1,7 @@
 // 게임 상태 관리
 class EscapeRoomGame {
     constructor() {
+        this.socket = io();
         this.currentCode = '';
         this.correctCode = '4152314'; // 7자리 비밀번호
         this.attempts = 0;
@@ -9,6 +10,7 @@ class EscapeRoomGame {
         this.timerInterval = null;
         
         this.initializeElements();
+        this.initializeSocket();
         this.initializeEventListeners();
         this.startTimer();
     }
@@ -24,6 +26,33 @@ class EscapeRoomGame {
         this.successModal = document.getElementById('success-modal');
         this.explosion = document.getElementById('explosion');
         this.resetBtn = document.getElementById('reset-btn');
+    }
+
+    initializeSocket() {
+        // 연결 상태 관리
+        this.socket.on('connect', () => {
+            console.log('서버에 연결되었습니다.');
+            this.updateConnectionStatus(true);
+        });
+
+        this.socket.on('disconnect', () => {
+            console.log('서버 연결이 끊어졌습니다.');
+            this.updateConnectionStatus(false);
+        });
+
+        this.socket.on('connect_error', (error) => {
+            console.error('연결 오류:', error);
+            this.updateConnectionStatus(false);
+        });
+
+        // 게임 이벤트 처리
+        this.socket.on('game-started', (data) => {
+            console.log('게임이 시작되었습니다:', data);
+        });
+
+        this.socket.on('game-ended', (data) => {
+            console.log('게임이 종료되었습니다:', data);
+        });
     }
 
     initializeEventListeners() {
@@ -135,6 +164,14 @@ class EscapeRoomGame {
         this.gameCompleted = true;
         this.stopTimer();
         
+        // 서버에 성공 이벤트 전송
+        this.socket.emit('end-game', {
+            roomId: 'main-room',
+            success: true,
+            attempts: this.attempts,
+            time: this.getElapsedTime()
+        });
+
         // 성공 애니메이션
         this.treasureBox.classList.add('success');
         this.boxLid.style.transform = 'rotateX(-90deg)';
@@ -214,6 +251,11 @@ class EscapeRoomGame {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    updateConnectionStatus(isOnline) {
+        // 연결 상태 표시 (선택사항)
+        console.log('연결 상태:', isOnline ? '온라인' : '오프라인');
     }
 
     addButtonFeedback(button) {
